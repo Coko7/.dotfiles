@@ -97,11 +97,17 @@ map <leader>pv :NERDTreeToggle<CR>
 " Folding
 let g:WhichKeyDesc_fold = "<leader>z Folding"
 
-let g:WhichKeyDesc_fold_all = "<leader>zc Fold all regions"
-map <leader>zc :action CollapseAllRegions<CR>
+let g:WhichKeyDesc_fold_current = "<leader>zc Fold region"
+map <leader>zc :action CollapseRegion<CR>
 
-let g:WhichKeyDesc_unfold_all = "<leader>zo Unfold all regions"
-map <leader>zo :action ExpandAllRegions<CR>
+let g:WhichKeyDesc_fold_all = "<leader>zC Fold all regions"
+map <leader>zC :action CollapseAllRegions<CR>
+
+let g:WhichKeyDesc_unfold_current = "<leader>zo Unfold region"
+map <leader>zo :action ExpandRegion<CR>
+
+let g:WhichKeyDesc_unfold_all = "<leader>zO Unfold all regions"
+map <leader>zO :action ExpandAllRegions<CR>
 
 " ---------------------------------------------------------------------------------
 
