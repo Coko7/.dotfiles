@@ -15,8 +15,9 @@ function gfzf() {
 
 function gweb() {
     __ensure_git_repo || return 1
-    local repo_url=`git remote get-url origin | sed 's|git@\(.*\):|https://\1/|'`
-    $SCRIPTS/web-open.sh $repo_url
+    local repo_url
+    repo_url=$(git remote get-url origin | sed 's|git@\(.*\):|https://\1/|')
+    "$SCRIPTS/web-open.sh" "$repo_url"
 }
 
 # Open issue page based on current branch name
@@ -27,19 +28,20 @@ function gissue() {
         return 1
     fi
 
-    local issue=`git branch --show-current | awk -F '/' '{print $1}'`
+    local issue
+    issue=$(git branch --show-current | awk -F '/' '{print $1}')
     xop "$ISSUES_BASE_URL/$issue"
 }
 
 function gfls() {
     __ensure_git_repo || return 1
-    $SCRIPTS/git-ls-files-meta.sh
+    "$SCRIPTS/git-ls-files-meta.sh"
 }
 
 # Get summary of all authors for a given file and sort by most commits made
 function gknow() {
     __ensure_git_repo || return 1
-    git log --follow --pretty=format:'%ae' -- $1 | sort | uniq -c | sort -nr; 
+    git log --follow --pretty=format:'%ae' -- "$1" | sort | uniq -c | sort -nr; 
 }
 
 # Pull
@@ -78,7 +80,7 @@ alias gg='git grep -n'
 alias gu='git grep -n --no-index'
 function ggv() {
     __ensure_git_repo || return 1
-    git grep -n $1 | grep -v $2 | grep -n --color=always $1 | less; 
+    git grep -n "$1" | grep -v "$2" | grep -n --color=always "$1" | less; 
 }
 
 function grasp() {
@@ -89,25 +91,28 @@ function grasp() {
 function ggf() {
     __ensure_git_repo || return 1
     local pattern=$1
-    local matches=`git grep -l $pattern`
-    if [ -z $matches ]; then
+    local matches
+    matches=$(git grep -l "$pattern")
+    if [ -z "$matches" ]; then
         echo "ggf: No match for '$pattern'" >&2
         return 1
     fi
  
     local file;
-    local lines_count=`echo "$matches" | wc -l`
+    local lines_count
+    lines_count=$(echo "$matches" | wc -l)
     if [ "$lines_count" -eq 1 ]; then
-        file=`echo "$matches"`
+        file=$matches
     else
-        file=`echo "$matches" | fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"`
-        if [ -z $file ]; then
+        file=$(echo "$matches" | fzf --preview "bat --color=always --style=numbers --line-range=:500 {}")
+        if [ -z "$file" ]; then
             return 1
         fi
     fi
  
-    local line=`git grep -n $pattern -- $file | head -n 1 | awk -F: '{print $2}'`
-    vim +$line $file
+    local line
+    line=$(git grep -n "$pattern" -- "$file" | head -n 1 | awk -F: '{print $2}')
+    vim +"$line" "$file"
 }
 
 # Branch
@@ -117,32 +122,35 @@ alias gbl='git branch --list'
 alias gco='git checkout'
 function gcof() {
     __ensure_git_repo || return 1
-    local branches=`git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/heads/`
+    local branches
+    branches=$(git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/heads/)
 
-    # local branch=`echo "$branches" | fzf --ansi --preview="git log -n 10 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --color=always {}"`
-    local branch=`echo "$branches" | fzf --ansi --preview="git log -n 10 --stat --color=always {}"`
-    if [ -z $branch ]; then
+    # local branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --color=always {}")
+    local branch
+    branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --stat --color=always {}")
+    if [ -z "$branch" ]; then
         return 1
     fi
 
-    git checkout $branch
+    git checkout "$branch"
 }
+
 alias gcb='git checkout -b'
 function gbdf() {
     __ensure_git_repo || return 1
-    local branches=`git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/heads/`
+    local branches
+    branches=$(git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/heads/)
 
-    # local branch=`echo "$branches" | fzf --ansi --preview="git log -n 10 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --color=always {}"`
-    local branch=`echo "$branches" | fzf --ansi --preview="git log -n 10 --stat --color=always {}"`
-    if [ -z $branch ]; then
+    # local branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --color=always {}")
+    local branch
+    branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --stat --color=always {}")
+    if [ -z "$branch" ]; then
         return 1
     fi
 
-    echo -n "Delete $branch ? [y/N] " 
-    read confirm
-
-    if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
-        git branch -D $branch
+    echo -n "" 
+    if gum confirm "Delete $branch ?" --default=false; then
+        git branch -D "$branch"
     else
         return 1
     fi
@@ -174,20 +182,22 @@ alias gspum='git stash push -um'
 alias gspop='git stash pop'
 function gsapp() {
     __ensure_git_repo || return 1
-    local STASH=`gstash-fzf | cut -d':' -f1`
-    if [ -z "$STASH" ]; then
+    local stash
+    stash=$(gstash-fzf | cut -d':' -f1)
+    if [ -z "$stash" ]; then
         return 1
     fi
-    git stash apply "$STASH"
+    git stash apply "$stash"
 }
 
 function gssh() {
     __ensure_git_repo || return 1
-    local STASH=`gstash-fzf | cut -d':' -f1`
-    if [ -z "$STASH" ]; then
+    local stash
+    stash=$(gstash-fzf | cut -d':' -f1)
+    if [ -z "$stash" ]; then
         return 1
     fi
-    git stash show -p "$STASH"
+    git stash show -p "$stash"
 }
 
 # Rebase

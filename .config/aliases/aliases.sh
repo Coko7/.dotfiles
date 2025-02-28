@@ -4,11 +4,11 @@
 # | X11 SPECIFIC |
 # +--------------+
 
-alias xpropc='xprop | grep WM_CLASS'        # display xprop class
+# alias xpropc='xprop | grep WM_CLASS'        # display xprop class
 alias xop='xdg-open'                        # open file with default app
 #alias xop='wslview'                        # WSL only
-alias monsel="$SCRIPTS/x-mon-select.sh"     # x-mon-select allows to pick a monitor setup before starting x-server
-alias xdpi="xrdb -query | grep Xft.dpi | awk '{print \$2}'"
+# alias monsel="$SCRIPTS/x-mon-select.sh"     # x-mon-select allows to pick a monitor setup before starting x-server
+# alias xdpi="xrdb -query | grep Xft.dpi | awk '{print \$2}'"
 
 # +-----------+
 # | CLIPBOARD |
@@ -39,7 +39,7 @@ alias pacls="pacman -Qe"
 alias pacll="pacman -Q"
 #alias pacc='sudo pacman -Sc'
 #alias paccc='sudo pacman -Scc'             # empty the whole cache
-alias pacbak="sudo pacman -Qe > `date +"%d%m%Y-%H%M"`.txt" # Backup explicitly installed packages to a text file
+alias pacbak="sudo pacman -Qe > \$(date +\"%d%m%Y-%H%M\").txt" # Backup explicitly installed packages to a text file
 
 # +--------------+
 # | APT COMMANDS |
@@ -93,7 +93,7 @@ function y() {
 # +------+
 
 # wget
-alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
+alias wget=wget --hsts-file="\$XDG_DATA_HOME/wget-hsts"
 
 # grep
 alias grep='grep --color=auto'
@@ -119,9 +119,9 @@ help() { "$@" --help 2>&1 | bathelp; }
 
 # Common
 alias vim='nvim'
-alias soz="source $ZDOTDIR/.zshrc"
+alias soz="source \$ZDOTDIR/.zshrc"
 alias lock='betterlockscreen -l dim'
-alias twitch-dl="$SCRIPTS/twitch-dl/twitch-dl.2.1.3.pyz"
+alias twitch-dl="\$SCRIPTS/twitch-dl/twitch-dl.2.1.3.pyz"
 alias battery="acpi -b | grep -P -o '[0-9]+(?=%)'"
 # alias kb='sudo setxkbmap -layout'       # Keyboard quick switch
 
@@ -129,7 +129,7 @@ function fzfip() {
     fzf --preview="$SCRIPTS/fzf-preview.sh {}"
 }
 
-alias mux="$SCRIPTS/tmux/start-env.sh"
+alias mux="\$SCRIPTS/tmux/start-env.sh"
 # alias tmuxs="$SCRIPTS/tmux/sessionizer.sh"
 # alias tmuxw="$SCRIPTS/tmux/windowizer.sh"
 
@@ -138,18 +138,18 @@ alias mux="$SCRIPTS/tmux/start-env.sh"
 # alias jj='kizaru-warp --awakened'
 
 function chill() {
-    num=$((1 + $RANDOM % 6))
-    if [ "$num" = "1" ]; then DISPLAY= cacafire; fi
+    num=$((1 + RANDOM % 6))
+    if [ "$num" = "1" ]; then DISPLAY="" cacafire; fi
     if [ "$num" = "2" ]; then nyancat; fi
     if [ "$num" = "3" ]; then cmatrix; fi
-    if [ "$num" = "4" ]; then $SCRIPTS/pipes.sh; fi
-    if [ "$num" = "5" ]; then $SCRIPTS/rick-roll.sh; fi
+    if [ "$num" = "4" ]; then "$SCRIPTS/pipes.sh"; fi
+    if [ "$num" = "5" ]; then "$SCRIPTS/rick-roll.sh"; fi
     if [ "$num" = "6" ]; then cava; fi
 }
 
 function weather() {
   if [ -z "$2" ]; then
-    curl wttr.in/${1}
+    curl "wttr.in/${1}"
   else
     # passing "v2" as argument will display more info (like sunrise / sunset)
     curl "wttr.in/${1}?format=${2}"
