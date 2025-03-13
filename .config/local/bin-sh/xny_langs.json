@@ -72,7 +72,7 @@
   {
     "name": "COBOL",
     "language_link": "/docs/cobol/",
-    "source_code_link": "/files/learn.COB",
+    "source_code_link": "/files/learn.cob",
     "contributor_text": "Originally contributed by Hyphz, and updated by 6 contributor(s).",
     "contributor_link": "https://github.com/adambard/learnxinyminutes-docs/blame/master/cobol.html.markdown"
   },
