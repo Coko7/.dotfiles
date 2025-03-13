@@ -112,6 +112,9 @@ alias any1='gping archlinux.org'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
+function mktoday() {
+    mkdir "$(date +"%Y-%m-%d")"
+}
 
 # bat help highlighting
 alias bathelp='bat --plain --language=help'
@@ -128,10 +131,6 @@ alias battery="acpi -b | grep -P -o '[0-9]+(?=%)'"
 function fzfip() {
     fzf --preview="$SCRIPTS/fzf-preview.sh {}"
 }
-
-alias mux="\$SCRIPTS/tmux/start-env.sh"
-# alias tmuxs="$SCRIPTS/tmux/sessionizer.sh"
-# alias tmuxw="$SCRIPTS/tmux/windowizer.sh"
 
 # Kizaru-warp
 # alias j='kizaru-warp'
