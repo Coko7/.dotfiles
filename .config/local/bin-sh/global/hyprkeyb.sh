@@ -24,16 +24,16 @@ function set_kb_layout() {
 
     # To understand the 0, 1, 2 values, see hyprland.conf
     case $layout in
-        "us" |"English (US)")               hyprctl switchxkblayout $keyboard 0 ;;
-        "fr" |"French")                     hyprctl switchxkblayout $keyboard 1 ;;
-        "dvo"|"dvorak"|"English (Dvorak)")  hyprctl switchxkblayout $keyboard 2 ;;
+        "us" |"English (US)")               hyprctl switchxkblayout "$keyboard" 0 ;;
+        "fr" |"French")                     hyprctl switchxkblayout "$keyboard" 1 ;;
+        "dvo"|"dvorak"|"English (Dvorak)")  hyprctl switchxkblayout "$keyboard" 2 ;;
         *) echo "hyprkeyb: unknown keyboard layout: $layout" >&2; exit 1 ;;
     esac
 
     pkill -RTMIN+8 waybar
 }
 
-MAIN_KEYBOARD=`get_main_keyboard`
+MAIN_KEYBOARD=$(get_main_keyboard)
 
 if [[ -z "$1" || "$1" = "help" || "$1" = "-h" ]]; then
     echo "Usage: hyprkeyb <COMMAND> [ARG]"
@@ -47,13 +47,13 @@ if [[ -z "$1" || "$1" = "help" || "$1" = "-h" ]]; then
 fi
 
 if [ "$1" = "get-kb" ]; then
-    echo $MAIN_KEYBOARD
+    echo "$MAIN_KEYBOARD"
 elif [ "$1" = "get-all-layouts" ]; then
     echo "[{\"name\": \"English (US)\"}, {\"name\": \"French\"}, {\"name\": \"English (Dvorak)\"}]";
 elif [ "$1" = "get-active-layout" ]; then
-    get_kb_layout $MAIN_KEYBOARD
+    get_kb_layout "$MAIN_KEYBOARD"
 elif [ "$1" = "set-layout" ]; then
-    set_kb_layout $MAIN_KEYBOARD "$2"
+    set_kb_layout "$MAIN_KEYBOARD" "$2"
 else
     echo "hyprkeyb: unknown command '$1'" >&2
     exit 1
