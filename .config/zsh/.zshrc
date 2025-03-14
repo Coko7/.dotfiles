@@ -2,11 +2,28 @@
 
 fpath=($XDG_CONFIG_HOME/zsh/plugins $fpath)
 
+# Custom function to only add path to list of paths if NOT in there already
+function __path_add() {
+    local entry="$1"
+    local path_list="$2"
+
+    if [ -d "$entry" ] && [ -n "$path_list" ] && [[ ":$path_list:" != *":$entry:"* ]]; then
+        path_list="${path_list:+"$path_list:"}$entry"
+    fi
+
+    echo "$path_list"
+}
+
 # +------------------------+
 # | TMUX ENVIRONMENT SETUP |
 # +------------------------+
 
+export PATH=$(__path_add "$XDG_CONFIG_HOME/local/bin-sh/global" "$PATH")
+
 if [ "$TMUX_WS_TYPE" = "PERSO" ]; then # Perso profile
+
+    # custom scripts
+    export PATH=$(__path_add "$XDG_CONFIG_HOME/local/bin-sh/personal" "$PATH")
 
     # zsh history
     export HISTFILE="$ZDOTDIR/history/personal/zhistory"
@@ -14,14 +31,17 @@ if [ "$TMUX_WS_TYPE" = "PERSO" ]; then # Perso profile
     # setup zoxide
     export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide/perso"
 
-    export _ZO_EXCLUDE_DIRS="$_ZO_EXCLUDE_DIRS:$PROJ_WORK"
-    export _ZO_EXCLUDE_DIRS="$_ZO_EXCLUDE_DIRS:$HOME/Downloads/Work"
-    export _ZO_EXCLUDE_DIRS="$_ZO_EXCLUDE_DIRS:$HOME/Pictures/Work"
+    export _ZO_EXCLUDE_DIRS=$(__path_add "$PROJ_WORK" "$_ZO_EXCLUDE_DIRS")
+    export _ZO_EXCLUDE_DIRS=$(__path_add "$HOME/Downloads/Work" "$_ZO_EXCLUDE_DIRS")
+    export _ZO_EXCLUDE_DIRS=$(__path_add "$HOME/Pictures/Work" "$_ZO_EXCLUDE_DIRS")
 
     # setup starship
     export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship-perso.toml"
 
 elif [ "$TMUX_WS_TYPE" = "WORK" ]; then # Work profile
+
+    # custom scripts
+    export PATH=$(__path_add "$XDG_CONFIG_HOME/local/bin-sh/work" "$PATH")
 
     # zsh history
     export HISTFILE="$ZDOTDIR/history/work/zhistory"
@@ -29,8 +49,9 @@ elif [ "$TMUX_WS_TYPE" = "WORK" ]; then # Work profile
     # setup zoxide
     export _ZO_DATA_DIR="$XDG_DATA_HOME/zoxide/work"
 
-    export _ZO_EXCLUDE_DIRS="$_ZO_EXCLUDE_DIRS:$PROJ_PERSO"
-    export _ZO_EXCLUDE_DIRS="$_ZO_EXCLUDE_DIRS:$HOME/Downloads/Personal"
+    export _ZO_EXCLUDE_DIRS=$(__path_add "$PROJ_PERSO" "$_ZO_EXCLUDE_DIRS")
+    export _ZO_EXCLUDE_DIRS=$(__path_add "$HOME/Downloads/Personal" "$_ZO_EXCLUDE_DIRS")
+    export _ZO_EXCLUDE_DIRS=$(__path_add "$HOME/Pictures/Wallpapers" "$_ZO_EXCLUDE_DIRS")
 
     # setup starship
     export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship-work.toml"
