@@ -42,8 +42,8 @@ function encrypt() {
         exit 1
     fi
 
-    gum spin --title="Encrypting $in_dir..." -- gpgtar --encrypt --symmetric --output $out_file --gpg-args "--cipher-algo AES-256 --passphrase=\"$passwd\" --batch" $in_dir
-    if [ $? -ne 0 ]; then
+    if ! gum spin --title="Encrypting $in_dir..." -- gpgtar --encrypt --symmetric --output "$out_file" \
+        --gpg-args "--cipher-algo AES-256 --passphrase=\"$passwd\" --batch" "$in_dir"; then
         echo "himude: error: failed to encrypt" >&2
         exit 1
     fi
@@ -65,8 +65,8 @@ function decrypt() {
         exit 1
     fi
 
-    gum spin --title "Decrypting $in_file..." -- gpgtar --decrypt --directory ./ --gpg-args "--cipher-algo AES-256 --passphrase=\"$passwd\" --batch" $in_file
-    if [ $? -ne 0 ]; then
+    if ! gum spin --title "Decrypting $in_file..." -- gpgtar --decrypt --directory . \
+        --gpg-args "--cipher-algo AES-256 --passphrase=\"$passwd\" --batch" "$in_file"; then
         echo "himude: error: failed to decrypt" >&2
         exit 1
     fi
