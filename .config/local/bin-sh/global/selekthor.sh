@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
-stdin=`cat -`
-entries=`echo -e "$stdin" | envsubst`
+stdin=$(cat -)
+entries=$(echo -e "$stdin" | envsubst)
 
 input=$1
 
-opts=""
+select_cmd="fzf"
 if [ -n "$input" ]; then
-    opts="-f $input"
+    select_cmd="fzf -f $input"
 fi
 
-pick=`echo -e "$entries" | fzf $opts | head -n 1`
-if [ $? != 0 ]; then
+if ! pick=$(echo -e "$entries" | $select_cmd | head -n 1); then
     return 1
 fi
 
-res=`echo $pick | cut -d':' -f2- | xargs`
-echo $res
+res=$(echo "$pick" | cut -d':' -f2- | xargs)
+echo "$res"
