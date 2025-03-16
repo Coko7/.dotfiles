@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pick=$(find $(echo "$PATH" | tr : '\n') -type f -executable -printf "%P\n" \
+pick=$(find "$(echo "$PATH" | tr : '\n')" -type f -executable -printf "%P\n" \
     | sort -u \
     | fzf --exact --prompt="Search Help> ")
     # | fzf --exact --prompt="Search Help> " --preview="{} --help 2>&1 | bat --color=always --plain --language=help")

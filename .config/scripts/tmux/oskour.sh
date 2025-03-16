@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-pick=$(echo -e "help\nman\ntldr\nxny" \
+pick=$(echo -e "cheat\nhelp\nman\ntldr\nxny" \
     | fzf --prompt="Oskour type> " \
-    --preview="echo {} | figlet | lolcat -f -S 42")
+    --preview="$SCRIPTS/tmux/oskour-preview.sh {}")
 if [ -z "$pick" ]; then
     exit 1
 fi
 
 case $pick in
+    "cheat") "$SCRIPTS/tmux/cheat-view.sh" ;;
     "help") "$SCRIPTS/tmux/help-view.sh" ;;
     "man") "$SCRIPTS/tmux/man-view.sh" ;;
     "tldr") "$SCRIPTS/tmux/tldr-view.sh" ;;

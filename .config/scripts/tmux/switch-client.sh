@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 function toggle-switch() {
-    CURRENT_SESSION=`tmux display-message -p '#S'`
-    OTHER_SESSION=`tmux list-sessions -F "#{session_name}" | fzf -f "!$CURRENT_SESSION"`
-    tmux switch-client -t $OTHER_SESSION 
+    CURRENT_SESSION=$(tmux display-message -p '#S')
+    OTHER_SESSION=$(tmux list-sessions -F "#{session_name}" | fzf -f "!$CURRENT_SESSION")
+    tmux switch-client -t "$OTHER_SESSION"
 }
 
 # function fuzzy-switch() {
-#     res=`tmux list-sessions -F "#{session_name}" | fzf`
+#     res=$(tmux list-sessions -F "#{session_name}" | fzf)
 #     tmux neww 'echo test'
 # }
 
-SESSION_COUNT=`tmux list-sessions | wc -l`
+SESSION_COUNT=$(tmux list-sessions | wc -l)
 
 case $SESSION_COUNT in
     0) echo "No tmux server running" >&2; exit 1 ;;
