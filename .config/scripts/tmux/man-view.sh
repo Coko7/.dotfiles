@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-pick=$(pacman -Q | cut -d' ' -f1 | fzf --exact \
+pick=$(man -k . | cut -d' ' -f1 | fzf --exact \
     --prompt="Search MAN> " \
-    --preview="man {} | bat --language=man --color=always --style=plain")
+    --preview="echo {} | figlet | lolcat -f -S 42")
 
 if [ -z "$pick" ]; then
     exit 0
