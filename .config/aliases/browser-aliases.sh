@@ -1,9 +1,17 @@
-wrfe() {
-    query=$(MY_url_encode "$@")
-    xdg-open "https://www.wordreference.com/fren/$query";
+function wrfe() {
+    if [ -z "$1" ]; then
+        echo "wrfe: expects arguments"
+        return 1
+    fi
+    query=$(url_encode.sh "$@")
+    "$SCRIPTS/web-open.sh" "https://www.wordreference.com/fren/$query";
 }
 
-wref() {
-    query=$(MY_url_encode "$@")
-    xdg-open "https://www.wordreference.com/enfr/$query";
+function wref() {
+    if [ -z "$1" ]; then
+        echo "wref: expects arguments"
+        return 1
+    fi
+    query=$(url_encode.sh "$@")
+    "$SCRIPTS/web-open.sh" "https://www.wordreference.com/enfr/$query";
 }
