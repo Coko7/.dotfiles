@@ -90,29 +90,49 @@ function grasp() {
 
 function ggf() {
     __ensure_git_repo || return 1
+
     local pattern=$1
+    if [ -z "$pattern" ]; then
+        pattern=$(gum input --prompt="Pattern> " --placeholder="Enter a search pattern")
+    fi 
+
+    if [ -z "$pattern" ]; then
+        echo "ggf: no pattern specified" >&2
+        return 1
+    fi
+
     local matches
-    matches=$(git grep -l "$pattern")
+    matches=$(rg -n --no-heading "$pattern")
     if [ -z "$matches" ]; then
         echo "ggf: No match for '$pattern'" >&2
         return 1
     fi
  
-    local file;
+    local selected;
     local lines_count
     lines_count=$(echo "$matches" | wc -l)
+
     if [ "$lines_count" -eq 1 ]; then
-        file=$matches
+        selected=$matches
     else
-        file=$(echo "$matches" | fzf --preview "bat --color=always --style=numbers --line-range=:500 {}")
-        if [ -z "$file" ]; then
+        selected=$(echo "$matches" | cut -d':' -f1,2 | fzf --prompt="Search matches> " \
+            --preview "$SCRIPTS/git-grep-preview.sh {} $pattern")
+        if [ -z "$selected" ]; then
             return 1
         fi
     fi
  
+    local filename
+    filename=$(echo "$selected" | cut -d':' -f1)
+
     local line
-    line=$(git grep -n "$pattern" -- "$file" | head -n 1 | awk -F: '{print $2}')
-    vim +"$line" "$file"
+    line=$(echo "$selected" | cut -d':' -f2)
+
+    vim +"$line" "$filename"
+
+    # local line
+    # line=$(git grep -n "$pattern" -- "$selected" | head -n 1 | awk -F: '{print $2}')
+    # vim +"$line" "$selected"
 }
 
 # Branch
