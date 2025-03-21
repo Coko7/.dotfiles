@@ -128,7 +128,7 @@ function ggf() {
     local line
     line=$(echo "$selected" | cut -d':' -f2)
 
-    vim +"$line" "$filename"
+    $EDITOR "$filename" +"$line"
 
     # local line
     # line=$(git grep -n "$pattern" -- "$selected" | head -n 1 | awk -F: '{print $2}')
