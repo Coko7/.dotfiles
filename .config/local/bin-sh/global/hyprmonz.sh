@@ -14,7 +14,9 @@ fi
 
 if gum confirm "Are you sure you want to switch to $pick?" --default=false; then
     target_mon_file="$SETUPS_DIR/$pick"
-
     ln -vsf "$target_mon_file" "$MON_SYM_LNK"
-    hyprctl reload
+
+    if [ -n "${HYPRLAND_INSTANCE_SIGNATURE}" ]; then
+        hyprctl reload
+    fi
 fi
