@@ -4,7 +4,7 @@ pick=$(echo -e "cheat\nhelp\nman\ntldr\nxny" \
     | fzf --prompt="Oskour type> " \
     --preview="$SCRIPTS/tmux/oskour-preview.sh {}")
 if [ -z "$pick" ]; then
-    exit 1
+    exit 0
 fi
 
 case $pick in
