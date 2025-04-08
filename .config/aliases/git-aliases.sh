@@ -180,6 +180,7 @@ function gbdf() {
 # Log
 alias gl='git log --color=always'
 alias gls='git log --color=always --stat'
+alias glp='git log --color=always -p'
 alias glg='git log --color=always --graph'
 # alias glo='git log --color=always --pretty="oneline"'
 alias glgo='git log --color=always --graph --oneline --decorate'
