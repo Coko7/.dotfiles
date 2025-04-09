@@ -1,0 +1,5 @@
+cheat: Browse https://cheat.sh cheat sheets
+help: Call a program with --help argument
+man: View a program's man page
+tldr: Browse the tldr-pages to get started quickly with a program
+xny: Learn about a language or tool with 'Learn X in Y minutes'
