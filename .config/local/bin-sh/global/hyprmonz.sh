@@ -12,7 +12,7 @@ if [ -z "$pick" ]; then
     exit 1
 fi
 
-if gum confirm "Are you sure you want to switch to $pick?" --default=false; then
+if gum confirm "Are you sure you want to switch to $pick?" --default=true; then
     target_mon_file="$SETUPS_DIR/$pick"
     ln -vsf "$target_mon_file" "$MON_SYM_LNK"
 
