@@ -12,4 +12,4 @@ if [ -z "$syntax" ]; then
     syntax="${file_path##*.}"
 fi
 
-$EDITOR - +"$line_num" -c "set syntax=$syntax" < "$file_path"
+nvim - +"$line_num" -c "set ft=$syntax" < "$file_path"
