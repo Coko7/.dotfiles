@@ -160,7 +160,7 @@ eval "$(starship init zsh)"
 # | ZOXIDE |
 # +--------+
 
-eval "$(zoxide init bash)"
+eval "$(zoxide init zsh)"
 
 # Flexing Arch
-fastfetch
+# fastfetch
