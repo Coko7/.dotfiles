@@ -11,7 +11,7 @@ pick=$(echo "$sinks" | jq -r --arg def_sink "$DEFAULT_SINK" '
       "  " + .description
     end
     ) | .[]' | rofi -dmenu -p " 󰓃 Audio source " -i -theme-str 'window { width: 1000px; height: 270px; }')
-formatted_pick=$(echo "$pick" | cut -d' ' -f2-)
+formatted_pick=$(echo "$pick" | cut -d' ' -f2- | awk '{$1=$1;print}')
 
 if [ -n "$formatted_pick" ]; then
     sink=$(echo "$sinks" | jq --arg desc "$formatted_pick" -r '.[] | select(.description == $desc) | .name')
