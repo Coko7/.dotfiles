@@ -3,7 +3,7 @@ function wrfe() {
         echo "wrfe: expects arguments"
         return 1
     fi
-    query=$(url_encode.sh "$@")
+    query=$(url.sh --encode "$@")
     "$SCRIPTS/web-open.sh" "https://www.wordreference.com/fren/$query";
 }
 
@@ -12,6 +12,6 @@ function wref() {
         echo "wref: expects arguments"
         return 1
     fi
-    query=$(url_encode.sh "$@")
+    query=$(url.sh --encode "$@")
     "$SCRIPTS/web-open.sh" "https://www.wordreference.com/enfr/$query";
 }
