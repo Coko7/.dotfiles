@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-paragraphs=5
-if [ -z "$1" ]; then
-    paragraphs=$1
+LOREM_FILE="$XDG_CONFIG_HOME/local/bin-sh/global/data/lorem50.txt"
+
+paragraphs=10
+if [ -n "$1" ]; then
+    paragraphs=$(($1 * 2))
 fi
 
-curl -s "http://loripsum.net/api/$paragraphs/paragraphs/medium"
+head -n "$paragraphs" "$LOREM_FILE"
