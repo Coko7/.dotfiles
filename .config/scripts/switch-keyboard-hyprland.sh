@@ -7,7 +7,7 @@ function notif() {
     local time=$4
 
     notify-send -u low "$title" "$body" \
-        -i "$img" -t $time \
+        -i "$img" -t "$time" \
         -h string:x-canonical-private-synchronous:sw-kb --transient
 }
 
@@ -34,7 +34,7 @@ if [ -n "$1" ]; then
     fi
 fi
 
-current_layout=`hyprkeyb.sh get-active-layout`
+current_layout=$(hyprkeyb.sh get-active-layout)
 
 if [ "$current_layout" == "English (US)" ]; then
     set_fr_azerty
