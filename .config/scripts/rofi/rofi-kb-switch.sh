@@ -11,7 +11,7 @@ pick=$(echo "$all_layouts" | jq -r --arg layout "$ACTIVE_LAYOUT" '
       "  " + .name
     end
     ) | .[]' | rofi -dmenu -p "   Layout " -i -theme-str 'window { width: 350px; height: 250px; }')
-formatted_pick=$(echo "$pick" | cut -d' ' -f2-)
+formatted_pick=$(echo "$pick" | cut -d' ' -f3-)
 
 if [ -n "$formatted_pick" ]; then
     hyprkeyb.sh set-layout "$formatted_pick"
