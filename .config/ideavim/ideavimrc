@@ -23,7 +23,7 @@ set hlsearch
 set visualbell
 
 " Use system clipboard
-set clipboard+=unnamed   
+set clipboard+=unnamedplus
 
 let mapleader = " "
 
@@ -91,6 +91,12 @@ vnoremap > >gv
 " Open NERDTree (use q to exit)
 let g:WhichKeyDesc_leader = "<leader>pv Open [P]roject [V]iew"
 map <leader>pv :NERDTreeToggle<CR>
+
+" ---------------------------------------------------------------------------------
+
+" Code actions
+let g:WhichKeyDesc_leader = "<leader>ca LSP: [C]ode [A]ction"
+nmap <leader>ca :action ShowIntentionActions<CR>
 
 " ---------------------------------------------------------------------------------
 
