@@ -3,34 +3,34 @@
 function get_meta() {
     local player=$1
     local key=$2
-    playerctl -p $player metadata --format "{{$key}}"
+    playerctl -p "$player" metadata --format "{{$key}}"
 }
 
 function show_notif() {
     local player=$1
-    local player_prefix=`echo $player | awk -F'.' '{print $1}'`
+    local title album artist art_url media_status
     local notif_id=$2
 
-    local title=`get_meta "$player" "title"`
-    local album=`get_meta "$player" "album"`
-    local artist=`get_meta "$player" "artist"`
-    local art_url=`get_meta "$player" "mpris:artUrl"`
+    title=$(get_meta "$player" "title")
+    album=$(get_meta "$player" "album")
+    artist=$(get_meta "$player" "artist")
+    art_url=$(get_meta "$player" "mpris:artUrl")
 
-    local media_status=`playerctl -p $player status`
+    media_status=$(playerctl -p "$player" status)
     case $media_status in
-        Playing) STATUS="";;
-        Paused) STATUS="";;
-        Stopped) STATUS="";;
+        Playing) status="";;
+        Paused) status="";;
+        Stopped) status="";;
         *) ;;
     esac
 
-    local BODY=""
+    local body=""
 
     if [[ -n "$album" ]]; then
-        BODY="$BODY$album\n"
+        body="$body$album\n"
     fi
 
-    BODY="$BODY$artist"
+    body="$body$artist"
 
     # image has to be downloaded
     if [[ $art_url == http* ]]; then
@@ -46,19 +46,19 @@ function show_notif() {
         img="$HOME/Pictures/System/music.jpg"
     fi
 
-    notify-send -u low "[ $STATUS ] $title" "$BODY" \
+    notify-send -u low "[ $status ] $title" "$body" \
         -i "$img" -t 2000 \
         -h "string:x-canonical-private-synchronous:cur-media-$notif_id" --transient
 }
 
 if [ -n "$1" ]; then
-    show_notif $1 1
+    show_notif "$1" 1
     exit 0
 fi
 
 id=0
-players=`playerctl -l`
+players=$(playerctl -l)
 for player in $players; do
     ((id++))
-    show_notif $player $id
+    show_notif "$player" $id
 done
