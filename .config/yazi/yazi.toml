@@ -3,6 +3,19 @@ show_hidden = true
 
 [opener]
 edit = [
-  { run = '$EDITOR "$@"', block = true, desc = "Open with $EDITOR" },
-  { run = 'bash viml.sh "$@"', block = true, desc = "Open with viml.sh" }
+    { run = '$EDITOR "$@"', block = true, desc = "Open with $EDITOR" },
+    { run = 'bash viml.sh "$@"', block = true, desc = "Open with viml.sh" }
+]
+image = [
+    { run = 'gimp "$@"', desc = "Open with Gimp" } 
+]
+video = [
+    { run = 'mpv "$@"', desc = "Open with mpv" },
+    { run = 'vlc "$@"', desc = "Open with VLC" } 
+]
+
+[open]
+prepend_rules = [
+    { mime = "image/*", use = "image" },
+    { mime = "video/*", use = "video" }
 ]
