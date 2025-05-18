@@ -31,8 +31,8 @@ function get_key_label() {
         "PRINT")                    echo "Prt" ;;
         "mouse_down")               echo "󱕐" ;;
         "mouse_up")                 echo "󱕑" ;;
-        "mouse:272")                echo "󰍽 (R)" ;;
-        "mouse:273")                echo "󰍽 (L)" ;;
+        "mouse:272")                echo "󰍽 (L)" ;;
+        "mouse:273")                echo "󰍽 (R)" ;;
         "XF86AudioLowerVolume")     echo "󰝞" ;;
         "XF86AudioMicMute")         echo "󰍭" ;;
         "XF86AudioMute")            echo "󰝟" ;;
