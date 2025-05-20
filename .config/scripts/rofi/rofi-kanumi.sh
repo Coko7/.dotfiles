@@ -3,14 +3,14 @@
 function choice_prompt() {
     local prompt="  Kanumi "
     local choice
-    choice=$(echo -e " Random\n󰥨 Directory\n󰥷 Image\n󰒓 Configure" | rofi -dmenu -p "$prompt" -i -theme-str 'window {width: 250px; height: 260px;}')
+    choice=$(echo -e " Random\n󰥨 Directory\n󰥷 Image\n󰒓 Configure" | rofi -dmenu -p "$prompt" -i -theme-str 'window {width: 280px; height: 260px;}')
     echo "$choice" | cut -d' ' -f2- | tr '[:upper:]' '[:lower:]'
 }
 
 function pick_random() {
     monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
     for monitor in $monitor_names; do
-        img=$(kanumi filter | shuf | head -n 1)
+        img=$(kanumi list | shuf | head -n 1)
         swww img -o "$monitor" "$img" -t outer
     done
 }
@@ -18,7 +18,7 @@ function pick_random() {
 function pick_dir() {
     local all_dirs pick monitor_names
 
-    all_dirs=$(kanumi filter | rev | cut -d'/' -f2- | rev | sort -u | cut -d'/' -f6-)
+    all_dirs=$(kanumi list | rev | cut -d'/' -f2- | rev | sort -u | cut -d'/' -f6-)
     pick=$(echo -e "$all_dirs" | rofi -dmenu -display-columns 1 -p " 󰥨 Directory " -theme-str 'window {width: 50%;}')
     if [[ -z "$pick" ]]; then
         exit 1
@@ -28,13 +28,13 @@ function pick_dir() {
 
     monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
     for monitor in $monitor_names; do
-        img=$(kanumi filter --directory "$wp_dir" | shuf | head -n 1)
+        img=$(kanumi list --directory "$wp_dir" | shuf | head -n 1)
         swww img -o "$monitor" "$img" -t outer
     done
 }
 
 function pick_image() {
-    pick=$(kanumi filter | cut -d'/' -f6- | rofi -dmenu -display-columns 1 -p " 󰥷 Image " -theme-str 'window {width: 50%;}')
+    pick=$(kanumi list | cut -d'/' -f6- | rofi -dmenu -display-columns 1 -p " 󰥷 Image " -theme-str 'window {width: 50%;}')
     if [[ -z "$pick" ]]; then
         exit 1
     fi
