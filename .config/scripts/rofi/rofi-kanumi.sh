@@ -28,7 +28,7 @@ function pick_dir() {
 
     monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
     for monitor in $monitor_names; do
-        img=$(kanumi list --directory "$wp_dir" | shuf | head -n 1)
+        img=$(kanumi list --directories "$wp_dir" | shuf | head -n 1)
         swww img -o "$monitor" "$img" -t outer
     done
 }
