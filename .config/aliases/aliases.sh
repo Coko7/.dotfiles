@@ -129,7 +129,7 @@ alias battery="acpi -b | grep -P -o '[0-9]+(?=%)'"
 # alias kb='sudo setxkbmap -layout'       # Keyboard quick switch
 
 function fzfip() {
-    fzf --preview="$SCRIPTS/fzf-preview.sh {}"
+    fzf --preview="$SCRIPTS/fzf-preview.sh {}" --height 100%
 }
 
 # Kizaru-warp
