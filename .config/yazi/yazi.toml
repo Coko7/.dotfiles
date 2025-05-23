@@ -7,7 +7,8 @@ edit = [
     { run = 'bash viml.sh "$@"', block = true, desc = "Open with viml.sh" }
 ]
 image = [
-    { run = 'gimp "$@"', desc = "Open with Gimp" } 
+    { run = 'vimiv "$@"', desc = "Open with vimiv" },
+    { run = 'gimp "$@"', desc = "Open with Gimp" }
 ]
 video = [
     { run = 'mpv "$@"', desc = "Open with mpv" },
