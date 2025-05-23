@@ -5,3 +5,6 @@ cursor-style = block
 shell-integration-features = no-cursor
 
 background-opacity = 0.9
+
+# Disable ligatures (they were fun but I am tired of them now)
+font-feature = -calt,-liga,-dlig
