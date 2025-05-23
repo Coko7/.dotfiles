@@ -14,7 +14,7 @@ function pretty() {
     echo -e "${color}$message${RESET}"
 }
 
-echo ""
+echo "TunNel" | figlet | lolcat -S 23
 
 wg_interface=$(sudo wg show | grep interface | awk '{print $2}')
 if [ -n "$wg_interface" ]; then
