@@ -7,10 +7,15 @@ function __ensure_git_repo() {
     fi
 }
 
-# Shorthand for fzf in git repo
-function gfzf() {
+function glazy() {
     __ensure_git_repo || return 1
-    git ls-files | fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"
+    if git restore --staged '**/packages.lock.json'; then
+        echo "kicking **/packages.lock.json from staged area"
+        git restore global.json
+        git status
+    else
+        echo "⚠️ Make sure you are at the repo root"
+    fi
 }
 
 function gweb() {
@@ -115,7 +120,9 @@ function ggf() {
     if [ "$lines_count" -eq 1 ]; then
         selected=$matches
     else
-        selected=$(echo "$matches" | cut -d':' -f1,2 | fzf --prompt="Search matches> " \
+        selected=$(echo "$matches" | cut -d':' -f1,2 | fzf \
+            --border-label ' Interactive Grep/Edit  ' --input-label ' Input ' \
+            --list-label ' Files ' --preview-label ' File Preview ' \
             --preview "$SCRIPTS/git-grep-preview.sh {} $pattern")
         if [ -z "$selected" ]; then
             return 1
@@ -147,7 +154,10 @@ function gcof() {
 
     # local branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --color=always {}")
     local branch
-    branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --stat --color=always {}")
+    branch=$(echo "$branches" | fzf --ansi \
+        --border-label ' Interactive Git Checkout ' --input-label ' Input ' \
+        --list-label ' Branches ' --preview-label ' Git History ' \
+        --preview="git log -n 10 --stat --color=always {}")
     if [ -z "$branch" ]; then
         return 1
     fi
@@ -163,7 +173,10 @@ function gbdf() {
 
     # local branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --color=always {}")
     local branch
-    branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --stat --color=always {}")
+    branch=$(echo "$branches" | fzf \
+        --border-label ' Interactive Git Branch Deletion' --input-label ' Input ' \
+        --list-label ' Branches ' --preview-label ' Git History ' \
+        --ansi --preview="git log -n 10 --stat --color=always {}")
     if [ -z "$branch" ]; then
         return 1
     fi
