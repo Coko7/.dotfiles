@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SWWW_ANIM="random"
+
 function choice_prompt() {
     local prompt="  Kanumi "
     local choice
@@ -11,7 +13,7 @@ function pick_random() {
     monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
     for monitor in $monitor_names; do
         img=$(kanumi list | shuf | head -n 1)
-        swww img -o "$monitor" "$img" -t outer
+        swww img -o "$monitor" "$img" -t $SWWW_ANIM
     done
 }
 
@@ -29,7 +31,7 @@ function pick_dir() {
     monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
     for monitor in $monitor_names; do
         img=$(kanumi list --directories "$wp_dir" | shuf | head -n 1)
-        swww img -o "$monitor" "$img" -t outer
+        swww img -o "$monitor" "$img" -t $SWWW_ANIM
     done
 }
 
@@ -43,7 +45,7 @@ function pick_image() {
 
     monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
     for monitor in $monitor_names; do
-        swww img -o "$monitor" "$pick_full" -t outer
+        swww img -o "$monitor" "$pick_full" -t $SWWW_ANIM
     done
 }
 
