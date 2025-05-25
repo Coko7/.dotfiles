@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-pick=$(cheat --list \
-    | tail -n +2 \
-    | fzf --prompt="Search cheat> " --preview "cheat {1} | bat --color=always --plain --language=bash")
+pick=$(cheat --list | tail -n +2 | fzf \
+    --border-label ' Oskour-Cheat: Interactive cheat.sh Fuzzer ' --input-label ' Input ' \
+    --list-label ' Cheat Sheets ' --preview-label ' Preview ' \
+    --preview "cheat {1} | bat --color=always --plain --language=bash")
 if [ -z "$pick" ]; then
     exit 0
 fi

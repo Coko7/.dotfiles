@@ -10,9 +10,11 @@
 preview_script="$SCRIPTS/tmux/fzf-window-preview.sh"
 
 windows=$(tmux list-windows -F '#I: #{window_name} (#{window_panes}p)')
-pick=$(echo -e "$windows" \
-    | fzf-tmux -p -w 80% -h 80% --prompt="Search window> " --preview="$preview_script {}" \
-    | cut -d':' -f1)
+
+pick=$(echo -e "$windows" | fzf \
+    --border-label ' Interactive Tmux Window Fuzzer ' --input-label ' Input ' \
+    --list-label ' Windows ' --preview-label ' Window Preview ' \
+    --preview="$preview_script {}" | cut -d':' -f1)
 
 if [ -n "$pick" ]; then
     tmux select-window -t "$pick"

@@ -8,7 +8,10 @@ pick=$(echo "$PATH" \
     | tr : '\n' \
     | xargs -I {} find {} -type f -executable -printf "%P\n" \
     | sort -u \
-    | fzf --exact --prompt="Search Help> " --preview "$fzf_preview_script {}")
+    | fzf --exact \
+    --border-label ' Oskour-Help: Interactive Help Fuzzer ' --input-label ' Input ' \
+    --list-label ' Program List ' --preview-label ' Preview ' \
+    --preview "$fzf_preview_script {}")
 
 if [ -z "$pick" ]; then
     exit 0
