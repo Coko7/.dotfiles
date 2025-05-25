@@ -121,7 +121,7 @@ function ggf() {
         selected=$matches
     else
         selected=$(echo "$matches" | cut -d':' -f1,2 | fzf \
-            --border-label ' Interactive Grep/Edit  ' --input-label ' Input ' \
+            --border-label ' Interactive Grep/Edit ' --input-label ' Input ' \
             --list-label ' Files ' --preview-label ' File Preview ' \
             --preview "$SCRIPTS/git-grep-preview.sh {} $pattern")
         if [ -z "$selected" ]; then
