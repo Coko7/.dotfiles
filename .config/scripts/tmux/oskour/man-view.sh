@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 pick=$(man -k . | cut -d' ' -f1 | sort -u | fzf --exact \
-    --prompt="Search MAN> " \
-    --preview="echo {} | figlet | lolcat -f -S 42")
+    --border-label ' Oskour-Man: Interactive Manual Fuzzer ' --input-label ' Input ' \
+    --list-label ' Man Pages ' --preview-label ' Preview ' \
+    --preview="man {} | bat -l man --color=always --style=plain")
 
 if [ -z "$pick" ]; then
     exit 0
