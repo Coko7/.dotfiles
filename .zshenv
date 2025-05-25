@@ -83,6 +83,11 @@ export FZF_CTRL_R_OPTS="
 
 # zoxide
 export _ZO_EXCLUDE_DIRS="$HOME/Documents/private/*"
+TREE_CMD="eza --color=always --icons --group-directories-first --tree --level=3"
+export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS \
+    --border-label ' Zoxide Interactive ' --input-label ' Input ' \
+    --list-label ' Jump List ' --preview-label ' Directory Structure ' \
+    --preview=\"echo {} | awk '{print \$2}' | xargs $TREE_CMD\""
 
 # Personal
 export SCRIPTS="$XDG_CONFIG_HOME/scripts"
