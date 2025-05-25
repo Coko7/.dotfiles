@@ -21,15 +21,19 @@ function set_us_qwerty() {
         && notif "Keyboard Layout" "QWERTY Burger" "kb_us_qwerty3.png" 2000
 }
 
-function set_us_dvorak() {
-    hyprkeyb.sh set-layout "dvorak" \
-        && notif "Keyboard Layout" "QWERTY Dvorak" "kb_us_dvorak.png" 2000
+function set_fr_ergol() {
+    hyprkeyb.sh set-layout "ergol" \
+        && notif "Keyboard Layout" "Ergo-L Rocket" "ergol.png" 2000
 }
 
+# function set_us_dvorak() {
+#     hyprkeyb.sh set-layout "dvorak" \
+#         && notif "Keyboard Layout" "QWERTY Dvorak" "kb_us_dvorak.png" 2000
+# }
 
 if [ -n "$1" ]; then
-    if [ "$1" == "dvorak" ]; then
-        set_us_dvorak
+    if [ "$1" == "ergol" ]; then
+        set_fr_ergol
         exit 0
     fi
 fi
