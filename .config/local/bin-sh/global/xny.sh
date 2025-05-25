@@ -55,7 +55,9 @@ if [ -n "$1" ]; then
 fi
 
 # If no arg provided, go into interactive mode
-xny_lang=$(echo "$XNY_DATA" | jq -r '.[].name' | gum filter --prompt="Choose> ")
+xny_lang=$(echo "$XNY_DATA" | jq -r '.[].name' | fzf \
+    --border-label ' Learn X in Y minutes Fuzzer ' --input-label ' Input ' \
+    --list-label ' Pages ' --preview="figlet {} | lolcat -f -S 42")
 if [ -n "$xny_lang" ]; then
     xny_link=$(find_lang "$xny_lang")
     display_lang_docs "$xny_lang" "$xny_link"
