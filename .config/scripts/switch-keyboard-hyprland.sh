@@ -41,9 +41,9 @@ fi
 current_layout=$(hyprkeyb.sh get-active-layout)
 
 if [ "$current_layout" == "English (US)" ]; then
-    set_fr_azerty
-elif [ "$current_layout" == "English (Dvorak)" ]; then
-    set_us_qwerty
+    set_fr_ergol
+# elif [ "$current_layout" == "English (Dvorak)" ]; then
+#     set_us_qwerty
 else
     set_us_qwerty
 fi

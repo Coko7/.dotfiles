@@ -24,9 +24,9 @@ function set_kb_layout() {
 
     # To understand the 0, 1, 2 values, see hyprland.conf
     case $layout in
-        "us"        | "English (QWERTY)")       hyprctl switchxkblayout "$keyboard" 0 ;;
-        "fr"        | "French (AZERTY)")        hyprctl switchxkblayout "$keyboard" 1 ;;
-        "ergol"     | "French (Ergo-L)")        hyprctl switchxkblayout "$keyboard" 2 ;;
+        "us"        | "English (US)")       hyprctl switchxkblayout "$keyboard" 0 ;;
+        "ergol"     | "French (Ergo-L)")    hyprctl switchxkblayout "$keyboard" 1 ;;
+        # "fr"        | "French")             hyprctl switchxkblayout "$keyboard" 1 ;;
         # "ergol-us"  | "Ergo-L (US)")    hyprctl switchxkblayout "$keyboard" 2 ;;
         *) echo "hyprkeyb: unknown keyboard layout: $layout" >&2; exit 1 ;;
     esac
@@ -50,7 +50,8 @@ fi
 if [ "$1" = "get-kb" ]; then
     echo "$MAIN_KEYBOARD"
 elif [ "$1" = "get-all-layouts" ]; then
-    echo "[{\"name\": \"English (QWERTY)\"}, {\"name\": \"French (AZERTY)\"}, {\"name\": \"French (Ergo-L)\"}]";
+    # echo "[{\"name\": \"English (US)\"}, {\"name\": \"French\"}, {\"name\": \"French (Ergo-L)\"}]";
+    echo "[{\"name\": \"English (US)\"}, {\"name\": \"French (Ergo-L)\"}]";
 elif [ "$1" = "get-active-layout" ]; then
     get_kb_layout "$MAIN_KEYBOARD"
 elif [ "$1" = "set-layout" ]; then
