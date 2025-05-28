@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-ACTIVE_LAYOUT=$(hyprkeyb.sh get-active-layout)
+active_layout=$(hyprkeyb.sh get-active-layout)
 all_layouts=$(hyprkeyb.sh get-all-layouts)
 
-pick=$(echo "$all_layouts" | jq -r --arg layout "$ACTIVE_LAYOUT" '
+pick=$(echo "$all_layouts" | jq -r --arg layout "$active_layout" '
   map(
     if .name == $layout then
       "  " + .name
