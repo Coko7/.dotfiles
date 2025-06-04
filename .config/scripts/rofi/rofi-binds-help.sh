@@ -24,6 +24,10 @@ function get_modmask_label() {
 
 function get_key_label() {
     case "$1" in
+        "left")                     echo "" ;;
+        "down")                     echo "" ;;
+        "up")                       echo "" ;;
+        "right")                    echo "" ;;
         "space")                    echo "󱁐" ;;
         "return")                   echo "󰌑" ;;
         "comma")                    echo "," ;;
