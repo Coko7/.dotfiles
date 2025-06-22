@@ -15,7 +15,10 @@ if [ -n "$1" ]; then
 fi
 
 spaces="Personal\nWork\nDemo"
-pick=$(echo -e "$spaces" | $select_cmd --prompt="Pick env > " --preview="echo {} | figlet")
+pick=$(echo -e "$spaces" | $select_cmd \
+    --border-label ' Interactive Tmux Env Init ' --input-label ' Input ' \
+    --list-label ' Environments ' --preview-label ' Env Preview ' \
+    --preview="$SCRIPTS/tmux/init-tmux-preview.sh {}")
 
 for env_name in $pick; do
     echo "activating: $env_name"
