@@ -55,6 +55,7 @@ alias gplo='git pull origin'
 
 # Status
 alias gst='git status'
+alias gst-nolock='git -c color.ui=always status | grep --color=always -v packages.lock.json'
 
 # Diff / show
 alias gd='git diff'
@@ -93,58 +94,60 @@ function grasp() {
     grep -inr "$1" --exclude-dir={obj,bin} --exclude=\*.min.\*; 
 }
 
-function ggf() {
-    __ensure_git_repo || return 1
-
-    local pattern=$1
-    if [ -z "$pattern" ]; then
-        pattern=$(gum input --prompt="Pattern> " --placeholder="Enter a search pattern")
-    fi 
-
-    if [ -z "$pattern" ]; then
-        echo "ggf: no pattern specified" >&2
-        return 1
-    fi
-
-    local matches
-    matches=$(rg -n --no-heading "$pattern")
-    if [ -z "$matches" ]; then
-        echo "ggf: No match for '$pattern'" >&2
-        return 1
-    fi
- 
-    local selected;
-    local lines_count
-    lines_count=$(echo "$matches" | wc -l)
-
-    if [ "$lines_count" -eq 1 ]; then
-        selected=$matches
-    else
-        selected=$(echo "$matches" | cut -d':' -f1,2 | fzf \
-            --border-label ' Interactive Grep/Edit ' --input-label ' Input ' \
-            --list-label ' Files ' --preview-label ' File Preview ' \
-            --preview "$SCRIPTS/git-grep-preview.sh {} $pattern")
-        if [ -z "$selected" ]; then
-            return 1
-        fi
-    fi
- 
-    local filename
-    filename=$(echo "$selected" | cut -d':' -f1)
-
-    local line
-    line=$(echo "$selected" | cut -d':' -f2)
-
-    $EDITOR "$filename" +"$line"
-
-    # local line
-    # line=$(git grep -n "$pattern" -- "$selected" | head -n 1 | awk -F: '{print $2}')
-    # vim +"$line" "$selected"
-}
+alias ggf="ggf.sh"
+# function ggf() {
+#     __ensure_git_repo || return 1
+#
+#     local pattern=$1
+#     if [ -z "$pattern" ]; then
+#         pattern=$(gum input --prompt="Pattern> " --placeholder="Enter a search pattern")
+#     fi 
+#
+#     if [ -z "$pattern" ]; then
+#         echo "ggf: no pattern specified" >&2
+#         return 1
+#     fi
+#
+#     local matches
+#     matches=$(rg -n --no-heading "$pattern")
+#     if [ -z "$matches" ]; then
+#         echo "ggf: No match for '$pattern'" >&2
+#         return 1
+#     fi
+#  
+#     local selected;
+#     local lines_count
+#     lines_count=$(echo "$matches" | wc -l)
+#
+#     if [ "$lines_count" -eq 1 ]; then
+#         selected=$matches
+#     else
+#         selected=$(echo "$matches" | cut -d':' -f1,2 | fzf \
+#             --border-label ' Interactive Grep/Edit ' --input-label ' Input ' \
+#             --list-label ' Files ' --preview-label ' File Preview ' \
+#             --preview "$SCRIPTS/git-grep-preview.sh {} $pattern")
+#         if [ -z "$selected" ]; then
+#             return 1
+#         fi
+#     fi
+#  
+#     local filename
+#     filename=$(echo "$selected" | cut -d':' -f1)
+#
+#     local line
+#     line=$(echo "$selected" | cut -d':' -f2)
+#
+#     $EDITOR "$filename" +"$line"
+#
+#     # local line
+#     # line=$(git grep -n "$pattern" -- "$selected" | head -n 1 | awk -F: '{print $2}')
+#     # vim +"$line" "$selected"
+# }
 
 # Branch
 #alias gr='git branch -r'
 alias gb='git branch'
+alias gbd='git branch --delete'
 alias gbl='git branch --list'
 alias gco='git checkout'
 function gcof() {
@@ -166,28 +169,45 @@ function gcof() {
 }
 
 alias gcb='git checkout -b'
-function gbdf() {
+function gcbj() {
     __ensure_git_repo || return 1
-    local branches
-    branches=$(git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/heads/)
 
-    # local branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --color=always {}")
-    local branch
-    branch=$(echo "$branches" | fzf \
-        --border-label ' Interactive Git Branch Deletion' --input-label ' Input ' \
-        --list-label ' Branches ' --preview-label ' Git History ' \
-        --ansi --preview="git log -n 10 --stat --color=always {}")
-    if [ -z "$branch" ]; then
-        return 1
+    local branch_name
+    branch_name=$(git-new-branch-jira.sh)    
+    if [[ -n "$branch_name" ]]; then
+        print -z -- "gcb $branch_name"
     fi
 
-    echo -n "" 
-    if gum confirm "Delete $branch ?" --default=false; then
-        git branch -D "$branch"
-    else
-        return 1
-    fi
+    #
+    # if branch_name=$(gum input --value="$branch_name" --placeholder="Type your branch name..."); then
+    #     git checkout -b "$branch_name"
+    # fi
 }
+
+
+
+# function gbdf() {
+#     __ensure_git_repo || return 1
+#     local branches
+#     branches=$(git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/heads/)
+#
+#     # local branch=$(echo "$branches" | fzf --ansi --preview="git log -n 10 --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --color=always {}")
+#     local branch
+#     branch=$(echo "$branches" | fzf \
+#         --border-label ' Interactive Git Branch Deletion' --input-label ' Input ' \
+#         --list-label ' Branches ' --preview-label ' Git History ' \
+#         --ansi --preview="git log -n 10 --stat --color=always {}")
+#     if [ -z "$branch" ]; then
+#         return 1
+#     fi
+#
+#     echo -n "" 
+#     if gum confirm "Delete $branch ?" --default=false; then
+#         git branch -D "$branch"
+#     else
+#         return 1
+#     fi
+# }
 #alias grs='git remote show'
 
 # Log

@@ -1,0 +1,23 @@
+# -*- mode: gitconfig; -*-
+# vim: set filetype=gitconfig:
+
+[alias]
+    grepblame = "! $XDG_CONFIG_HOME/git/git-grepblame.sh"
+
+    blameSmart = blame -w -C -C -C
+
+    los = "log --stat --color=always"
+
+    restore-lazy = "!f() { \
+        if git restore --staged '**/packages.lock.json'; then \
+            echo 'kicking **/packages.lock.json from staged area'; \
+            git restore global.json; \
+            git status; \
+        else \
+            echo 'Make sure you are at the repo root'; \
+        fi; \
+    }; f"
+
+    status-nolock = "!f() { git -c color.ui=always status | grep --color=always -v packages.lock.json; }; f"
+
+    filter-repo = "!python3 ~/.config/local/bin-sh/global/git-filter-repo"
