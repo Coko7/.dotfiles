@@ -6,22 +6,14 @@ All of my Linux configuration files.
 
 ## 🐧 System setup
 
-- Operating system: [Arch Linux](https://archlinux.org/)
+- Disto: [Arch Linux](https://archlinux.org/)
 - Display server: [Wayland](https://wayland.freedesktop.org/)
-- Window manager: [Hyprland](https://hyprland.org/)
-- Compositor: [Hyprland](https://hyprland.org/) *(Wayland window managers are also compositors)*
+- Window manager: [Hyprland](https://hyprland.org/) (also works as the Compositor)
 - System/status bar: [Waybar](https://github.com/Alexays/Waybar)
 - Notification daemon: [SwayNotificationCenter](https://github.com/ErikReider/SwayNotificationCenter)
 - Shell: [Zsh](https://www.zsh.org/) (with [Starship](https://starship.rs/) for my prompt)
-- Application launcher:
-    - [rofi-wayland](https://github.com/lbonn/rofi) (fork of [rofi](https://github.com/davatorium/rofi), compatible with Wayland):
-        - [rofi-emoji](https://github.com/Mange/rofi-emoji)
-        - [rofi-calc](https://github.com/svenstaro/rofi-calc)
-    - ~~[Wofi](https://hg.sr.ht/~scoopta/wofi)~~
-- Terminals:
-    - [Kitty](https://sw.kovidgoyal.net/kitty)
-    - [Alacritty](https://alacritty.org)
-    - [Ghostty](https://ghostty.org)
+- Application launcher: [rofi-wayland](https://github.com/lbonn/rofi) (fork of [rofi](https://github.com/davatorium/rofi), compatible with Wayland):
+- Terminals: [Ghostty](https://ghostty.org), [Kitty](https://sw.kovidgoyal.net/kitty), [Alacritty](https://alacritty.org)
 - Text/code editor: [Neovim](https://neovim.io/) (using [kickstart](https://github.com/nvim-lua/kickstart.nvim))
 - Audio:
     - Drivers and interface: [ALSA](https://www.alsa-project.org/)
