@@ -16,14 +16,6 @@ function show_notif() {
     artist=$(get_meta "$player" "artist")
     art_url=$(get_meta "$player" "mpris:artUrl")
 
-    media_status=$(playerctl -p "$player" status)
-    case $media_status in
-        Playing) status="";;
-        Paused) status="";;
-        Stopped) status="";;
-        *) ;;
-    esac
-
     local body=""
 
     if [[ -n "$album" ]]; then
@@ -46,7 +38,7 @@ function show_notif() {
         img="$HOME/Pictures/System/music.jpg"
     fi
 
-    notify-send -u low "[ $status ] $title" "$body" \
+    notify-send -u low "$title" "$body" \
         -i "$img" -t 2000 \
         -h "string:x-canonical-private-synchronous:cur-media-$notif_id" --transient
 }
@@ -59,6 +51,9 @@ fi
 id=0
 players=$(playerctl -l)
 for player in $players; do
-    ((id++))
-    show_notif "$player" $id
+    status=$(playerctl -p "$player" status)
+    if [[ "$status" == "Playing" ]]; then
+        ((id++))
+        show_notif "$player" $id
+    fi
 done
