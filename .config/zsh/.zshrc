@@ -75,6 +75,12 @@ source <(fzf --zsh)
 # Custom keybind shortcuts for Git
 source $ZDOTDIR/plugins/fzf-git/fzf-git.sh
 
+# +-------+
+# | ATUIN |
+# +-------+
+
+eval "$(atuin init zsh)"
+
 # +------+
 # | RUST |
 # +------+
@@ -92,6 +98,22 @@ eval "$(starship init zsh)"
 # +--------+
 
 eval "$(zoxide init zsh)"
+
+# Custom ZLE widget to lauch zoxide interactive with CTRL+E(xplore)
+function zoxide_prompt_interactive() {
+    zi
+    zle reset-prompt
+}
+
+zle -N zoxide_prompt_interactive
+bindkey '^E' zoxide_prompt_interactive
+
+function copy_line_to_clipboard() {
+    print -r -- "$BUFFER" | wl-copy --trim-newline
+}
+
+zle -N copy_line_to_clipboard
+bindkey '^Y' copy_line_to_clipboard
 
 # zsh parameter completion for the dotnet CLI
 
