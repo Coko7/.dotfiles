@@ -11,7 +11,7 @@ fi
 echo "ssh-muxor" | figlet | lolcat -S 42
 
 server_names=$(echo "$MACHINES_DATA" | jq -r '.[].name')
-server_name=$(echo "$server_names" | gum choose)
+server_name=$(echo "$server_names" | gum filter)
 if [ -z "$server_name" ]; then
     exit 1
 fi
