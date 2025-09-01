@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 CLI_NAME="dajo"
-JOURNAL_DIR="$PROJ_PERSO/Notes/journal"
 
 function show_help() {
     cat <<EOF
 Usage: $CLI_NAME [OPTION]
 Manage your daily journal.
+DAJO_ENTRY_DIR is set to: '$DAJO_ENTRY_DIR'
 
 Options:
   -c, --create DATE     Crate a journal entry for the given DATE
@@ -28,7 +28,7 @@ function get_entry_path() {
 
     if [ -n "$date_exp" ]; then
         if ! date=$(date -d "$1"); then
-            echo "daily-journal: failed to imply date from '$1'"
+            echo "$CLI_NAME: failed to imply date from '$1'"
             exit 1
         fi
     else
@@ -40,7 +40,7 @@ function get_entry_path() {
     day=$(date -d "$date" +%d)
     date=$(date -d "$date" +%Y-%m-%d)
 
-    echo "$JOURNAL_DIR/$year/$month_dir/$day.md"
+    echo "$DAJO_ENTRY_DIR/$year/$month_dir/$day.md"
 }
 
 function create_journal_entry() {
@@ -58,8 +58,8 @@ function create_journal_entry() {
 
     mkdir -p "$(dirname "$entry_path")"
     title=$(date -d "$date_exp" +"%A %-d, %B %Y")
-    todo_path="$JOURNAL_DIR/todo.md"
-    default_content=$(sed "s/__TITLE__/$title/" "$JOURNAL_DIR/template.md"  \
+    todo_path="$DAJO_ENTRY_DIR/todo.md"
+    default_content=$(sed "s/__TITLE__/$title/" "$DAJO_ENTRY_DIR/template.md"  \
         | sed "s/__DATE__/$date/" \
         | sed "/__TODO-CONTENT__/{
             r $todo_path
@@ -97,6 +97,17 @@ function open_daily_journal() {
 
     $EDITOR "$entry_path"
 }
+
+if [ ! -v DAJO_ENTRY_DIR ]; then
+    echo "$CLI_NAME: DAJO_ENTRY_DIR env var not set"
+    echo "Make sure to set first with export DAJO_ENTRY_DIR='/path/to/dir'"
+    exit 1
+fi
+
+if [ ! -d "$DAJO_ENTRY_DIR" ]; then
+    echo "$CLI_NAME: DAJO_ENTRY_DIR set to invalid path: $DAJO_ENTRY_DIR"
+    exit 1
+fi
 
 ACTION="$1"
 DATE_EXPR="$2"
