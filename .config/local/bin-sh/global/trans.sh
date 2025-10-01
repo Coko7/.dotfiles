@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "$SCRIPTS/bash-colors.sh"
+
 src_lang=""
 dst_lang="fr"
 if [ -n "$1" ]; then
@@ -20,5 +22,8 @@ fi
 
 res=$(gum spin --title="Translating..." -- trans --brief "$src_lang:$dst_lang" "$text")
 
-echo "Original: $text"
-echo "Translated: $res"
+echo -e "\n${FG_YELLOW}Original:${COL_RESET}"
+echo "$text"
+
+echo -e "\n${FG_CYAN}Translated:${COL_RESET}"
+echo "$res"

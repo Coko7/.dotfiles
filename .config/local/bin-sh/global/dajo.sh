@@ -6,7 +6,6 @@ function show_help() {
     cat <<EOF
 Usage: $CLI_NAME [OPTION]
 Manage your daily journal.
-DAJO_ENTRY_DIR is set to: '$DAJO_ENTRY_DIR'
 
 Options:
   -c, --create DATE     Crate a journal entry for the given DATE
@@ -19,6 +18,9 @@ Examples:
   $CLI_NAME --create yesterday
   $CLI_NAME --get today
   $CLI_NAME --open "last monday"
+
+Environment:
+  DAJO_ENTRY_DIR is set to: '$DAJO_ENTRY_DIR'
 EOF
 }
 
@@ -117,5 +119,10 @@ case "$ACTION" in
     --create|-c) create_journal_entry "$DATE_EXPR" ;;
     --lookup|-l) lookup_journal_entry "$DATE_EXPR" ;;
     --open|-o) open_daily_journal "$DATE_EXPR" ;;
-    *) show_help ;;
+    --help|-h) show_help ;;
+    *) 
+        echo -e "$CLI_NAME: invalid command. See help below\n"
+        show_help 
+        exit 1
+        ;;
 esac
