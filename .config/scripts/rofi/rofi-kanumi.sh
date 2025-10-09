@@ -21,7 +21,7 @@ function pick_dir() {
     local all_dirs pick monitor_names
 
     all_dirs=$(kanumi list | rev | cut -d'/' -f2- | rev | sort -u | cut -d'/' -f6-)
-    pick=$(echo -e "$all_dirs" | rofi -dmenu -display-columns 1 -p " 󰥨 Directory " -theme-str 'window {width: 50%;}')
+    pick=$(echo -e "$all_dirs" | rofi -dmenu -display-columns 1 -i -p " 󰥨 Directory " -theme-str 'window {width: 50%;}')
     if [[ -z "$pick" ]]; then
         exit 1
     fi
@@ -36,7 +36,7 @@ function pick_dir() {
 }
 
 function pick_image() {
-    pick=$(kanumi list | cut -d'/' -f6- | rofi -dmenu -display-columns 1 -p " 󰥷 Image " -theme-str 'window {width: 50%;}')
+    pick=$(kanumi list | cut -d'/' -f6- | rofi -dmenu -display-columns 1 -i -p " 󰥷 Image " -theme-str 'window {width: 50%;}')
     if [[ -z "$pick" ]]; then
         exit 1
     fi
