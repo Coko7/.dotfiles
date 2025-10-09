@@ -14,7 +14,7 @@ All of my Linux configuration files.
 - Shell: [Zsh](https://www.zsh.org/) (with [Starship](https://starship.rs/) for my prompt)
 - Application launcher: [rofi-wayland](https://github.com/lbonn/rofi) (fork of [rofi](https://github.com/davatorium/rofi), compatible with Wayland):
 - Terminals: [Ghostty](https://ghostty.org), [Kitty](https://sw.kovidgoyal.net/kitty), [Alacritty](https://alacritty.org)
-- Text/code editor: [Neovim](https://neovim.io/) (using [kickstart](https://github.com/nvim-lua/kickstart.nvim))
+- Text/code editor: [Neovim](https://neovim.io/) (my config: [coko7/nvim-config](https://github.com/Coko7/nvim-config))
 - Audio:
     - Drivers and interface: [ALSA](https://www.alsa-project.org/)
     - Sound server: [PipeWire](https://pipewire.org/)
@@ -37,7 +37,11 @@ If you are curious, you can check it out [here](./xorg_setup.md).
 
 ## 🖥️ Desktop applications
 
-You can check a detailed list of my preferred apps here: [my-floss/desktop](https://github.com/Coko7/my-floss/blob/main/desktop.md)
+You can check a detailed list of my preferred apps here: [coko7/my-floss](https://github.com/Coko7/my-floss/blob/main/desktop.md)
+
+## ⌨️ Keyboard setup
+
+I am not using a classic ISO keyboard. More info here: [coko7/crkbd](https://github.com/Coko7/crkbd)
 
 ## ✨ Inspiration
 
