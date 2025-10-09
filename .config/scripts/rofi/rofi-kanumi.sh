@@ -57,7 +57,7 @@ function pick_image() {
 }
 
 function query_wallpaper() {
-    local pick
+    local pick formatted_pick metadata_path
     pick=$(swww query | rofi \
         -dmenu -display-columns 1 -i -p " 󰸉 Active " \
         -theme-str 'window {width: 1500px; height: 250px;}')
@@ -65,7 +65,10 @@ function query_wallpaper() {
         exit 1
     fi
 
-    echo "$pick" | wl-copy
+    formatted_pick=$(echo -e "$pick" | rev | cut -d: -f1 | rev | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+    metadata_path=$(kanumi config show --json | jq -r '.meta_path')
+    line_number=$(rg --no-heading --line-number "$formatted_pick" "$metadata_path" | cut -d: -f1)
+    nvim-qt "+$line_number" "$metadata_path" 
 }
 
 function edit_config() {
