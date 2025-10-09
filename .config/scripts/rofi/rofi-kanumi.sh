@@ -5,7 +5,9 @@ SWWW_ANIM="random"
 function choice_prompt() {
     local prompt="  Kanumi "
     local choice
-    choice=$(echo -e " Random\n󰥨 Directory\n󰥷 Image\n󰒓 Configure" | rofi -dmenu -p "$prompt" -i -theme-str 'window {width: 280px; height: 260px;}')
+    choice=$(echo -e " Random\n󰥨 Directory\n󰥷 Image\n Query\n󰒓 Configure" \
+        | rofi -dmenu -p "$prompt" -i \
+        -theme-str 'window {width: 280px; height: 300px;}')
     echo "$choice" | cut -d' ' -f2- | tr '[:upper:]' '[:lower:]'
 }
 
@@ -21,7 +23,9 @@ function pick_dir() {
     local all_dirs pick monitor_names
 
     all_dirs=$(kanumi list | rev | cut -d'/' -f2- | rev | sort -u | cut -d'/' -f6-)
-    pick=$(echo -e "$all_dirs" | rofi -dmenu -display-columns 1 -i -p " 󰥨 Directory " -theme-str 'window {width: 50%;}')
+    pick=$(echo -e "$all_dirs" | rofi -dmenu -display-columns 1 \
+        -i -p " 󰥨 Directory " \
+        -theme-str 'window {width: 50%;}')
     if [[ -z "$pick" ]]; then
         exit 1
     fi
@@ -36,7 +40,10 @@ function pick_dir() {
 }
 
 function pick_image() {
-    pick=$(kanumi list | cut -d'/' -f6- | rofi -dmenu -display-columns 1 -i -p " 󰥷 Image " -theme-str 'window {width: 50%;}')
+    local all_dirs pick monitor_names
+    pick=$(kanumi list | cut -d'/' -f6- | rofi \
+        -dmenu -display-columns 1 -i -p " 󰥷 Image " \
+        -theme-str 'window {width: 50%;}')
     if [[ -z "$pick" ]]; then
         exit 1
     fi
@@ -49,6 +56,18 @@ function pick_image() {
     done
 }
 
+function query_wallpaper() {
+    local pick
+    pick=$(swww query | rofi \
+        -dmenu -display-columns 1 -i -p " 󰸉 Active " \
+        -theme-str 'window {width: 1500px; height: 250px;}')
+    if [[ -z "$pick" ]]; then
+        exit 1
+    fi
+
+    echo "$pick" | wl-copy
+}
+
 function edit_config() {
     xdg-open "$XDG_CONFIG_HOME/kanumi/config.toml"
 }
@@ -58,6 +77,7 @@ case "$mode" in
     random)     pick_random ;;
     directory)  pick_dir ;;
     image)      pick_image ;;
+    query)      query_wallpaper ;;
     configure)  edit_config ;;
     *) exit 1;;
 esac
