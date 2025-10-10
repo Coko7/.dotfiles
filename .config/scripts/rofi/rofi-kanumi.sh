@@ -58,9 +58,12 @@ function pick_image() {
 
 function query_wallpaper() {
     local pick formatted_pick metadata_path
-    pick=$(swww query | rofi \
+    pick=$(swww query \
+        | sed 's/^: //g' \
+        | sed 's/currently displaying: //g' \
+        | rofi \
         -dmenu -display-columns 1 -i -p " 󰸉 Active " \
-        -theme-str 'window {width: 1500px; height: 250px;}')
+        -theme-str 'window {width: 1400px; height: 250px;}')
     if [[ -z "$pick" ]]; then
         exit 1
     fi
