@@ -16,6 +16,7 @@ function get_modmask_label() {
         68) echo "${K_SUPER} ${K_CTRL}" ;;
         72) echo "${K_SUPER} ${K_ALT}" ;;
         73) echo "${K_SUPER} ${K_ALT}${K_SHIFT}" ;;
+        77) echo "${K_SUPER} ${K_CTRL} ${K_ALT} ${K_SHIFT}" ;;
         *)
             echo "unsupported modmask: $modmask" >&2
             exit 1 ;;
