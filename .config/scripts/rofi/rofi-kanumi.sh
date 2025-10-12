@@ -5,7 +5,7 @@ SWWW_ANIM="random"
 function choice_prompt() {
     local prompt="  Kanumi "
     local choice
-    choice=$(echo -e " Random\n󰥨 Directory\n󰥷 Image\n Query\n󰒓 Configure" \
+    choice=$(echo -e " Random\n󰥨 Directory\n󰥷 Image\n Identify\n󰒓 Configure" \
         | rofi -dmenu -p "$prompt" -i \
         -theme-str 'window {width: 280px; height: 300px;}')
     echo "$choice" | cut -d' ' -f2- | tr '[:upper:]' '[:lower:]'
@@ -56,7 +56,7 @@ function pick_image() {
     done
 }
 
-function query_wallpaper() {
+function identify_wallpapers() {
     local pick formatted_pick metadata_path
     pick=$(swww query \
         | sed 's/^: //g' \
@@ -71,7 +71,7 @@ function query_wallpaper() {
     formatted_pick=$(echo -e "$pick" | rev | cut -d: -f1 | rev | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
     metadata_path=$(kanumi config show --json | jq -r '.meta_path')
     line_number=$(rg --no-heading --line-number "$formatted_pick" "$metadata_path" | cut -d: -f1)
-    nvim-qt "+$line_number" "$metadata_path" 
+    nvim-qt "+$line_number" "$metadata_path"
 }
 
 function edit_config() {
@@ -83,7 +83,7 @@ case "$mode" in
     random)     pick_random ;;
     directory)  pick_dir ;;
     image)      pick_image ;;
-    query)      query_wallpaper ;;
+    identify)   identify_wallpapers ;;
     configure)  edit_config ;;
     *) exit 1;;
 esac
