@@ -6,7 +6,8 @@ while true; do
     pick=$(kanumi scan --json | jq -r '.new[]' | fzf \
         --border-label ' Kanumi Interactive Register ' --input-label ' Input ' \
         --list-label ' Unregistered Images ' --preview-label ' Image Preview ' \
-        --preview="$SCRIPTS/fzf-preview.sh {}" --height 80%)
+        --preview="$SCRIPTS/fzf-preview.sh {}" --height 80% \
+        --preview-window=down:40%)
     if [ -z "$pick" ]; then
         exit 1
     fi
