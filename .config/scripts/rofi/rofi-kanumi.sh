@@ -57,10 +57,14 @@ function pick_image() {
 }
 
 function identify_wallpapers() {
-    local pick formatted_pick metadata_path
+    local pick formatted_pick root_path metadata_path
+    root_path=$(kanumi config show --json | jq -r '.root_path')
+    metadata_path=$(kanumi config show --json | jq -r '.meta_path')
+
     pick=$(swww query \
         | sed 's/^: //g' \
         | sed 's/currently displaying: //g' \
+        | sed "s|$root_path||" \
         | rofi \
         -dmenu -display-columns 1 -i -p " 󰸉 Active " \
         -theme-str 'window {width: 1400px; height: 250px;}')
@@ -68,8 +72,8 @@ function identify_wallpapers() {
         exit 1
     fi
 
-    formatted_pick=$(echo -e "$pick" | rev | cut -d: -f1 | rev | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-    metadata_path=$(kanumi config show --json | jq -r '.meta_path')
+    formatted_pick=$(echo -e "$pick" | rev | cut -d: -f1 | rev \
+        | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
     line_number=$(rg --no-heading --line-number "$formatted_pick" "$metadata_path" | cut -d: -f1)
     nvim-qt "+$line_number" "$metadata_path"
 }
