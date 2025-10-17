@@ -49,7 +49,7 @@ for f in $XDG_CONFIG_HOME/aliases/*.sh; do source "$f"; done
 # Vi mode
 bindkey -v
 export KEYTIMEOUT=40
-bindkey '^R' history-incremental-search-backward
+# bindkey '^R' history-incremental-search-backward
 
 # +------------+
 # | COMPLETION |
@@ -65,6 +65,7 @@ autoload -U compinit; compinit
 # syntax highlighting (with catppuccin theme)
 source $ZDOTDIR/plugins/catppuccin_macchiato-zsh-syntax-highlighting.zsh
 source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # +-----+
 # | FZF |
@@ -99,19 +100,34 @@ eval "$(starship init zsh)"
 
 eval "$(zoxide init zsh)"
 
-# Custom ZLE widget to lauch zoxide interactive with CTRL+E(xplore)
+# Custom ZLE widget to launch zoxide interactive with CTRL+E(xplore)
 function zoxide_prompt_interactive() {
     zi
     zle reset-prompt
 }
-
 zle -N zoxide_prompt_interactive
 bindkey '^E' zoxide_prompt_interactive
 
+# Custom ZLE widget to launch yazi interactive with CTRL+N(avigate)
+function yazi_interactive() {
+    y
+    zle reset-prompt
+}
+zle -N yazi_interactive
+bindkey '^N' yazi_interactive
+
+# Custom ZLE widget to launch neovim interactive with CTRL+T(ext Edit)
+function neovim_interactive() {
+    nvim
+    zle reset-prompt
+}
+zle -N neovim_interactive
+bindkey '^T' neovim_interactive
+
+# Custom ZLE widget to copy current line to clipboard
 function copy_line_to_clipboard() {
     print -r -- "$BUFFER" | wl-copy --trim-newline
 }
-
 zle -N copy_line_to_clipboard
 bindkey '^Y' copy_line_to_clipboard
 
