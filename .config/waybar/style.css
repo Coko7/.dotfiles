@@ -1,4 +1,4 @@
-@import "mocha.css"; 
+@import "mocha.css";
 
 * {
     font-family: "JetBrainsMono NF Mono Bold";
@@ -7,13 +7,11 @@
 }
 
 window#waybar {
-    border-radius: 10px;
     background: transparent;
     background-color: @crust;
     color: @overlay0;
     transition-property: background-color;
     transition-duration: 0.1s;
-    border: 2px solid @mauve;
     /* border: 1px solid @overlay1; */
 }
 
@@ -46,7 +44,7 @@ button:hover:not(.active) {
 }
 
 #workspaces button {
-    min-width: 30px;
+    min-width: 15px;
     color: @mauve;
 }
 
@@ -98,8 +96,8 @@ button:hover:not(.active) {
 }
 
 #tray {
-    border-right: 2px solid @mauve;
-    padding-right: 10px;
+    /* border-right: 2px solid @mauve; */
+    /* padding-right: 10px; */
 }
 
 #pulseaudio:hover,
@@ -131,10 +129,7 @@ button:hover:not(.active) {
 
 #clock {
     font-family: "Hack Nerd Font";
-    font-size: 20px;
     color: @blue;
-    padding: 0 20px;
-    border-left: 2px solid @mauve;
 }
 
 #idle_inhibitor {
@@ -169,9 +164,8 @@ button:hover:not(.active) {
 
 #custom-icon {
     color: @blue;
-    font-size: 30px;
-    padding: 0 30px;
-    padding-right: 40px;
+    font-size: 20px;
+    padding: 0 15px;
     transition-property: color, background-color, border-radius;
     transition-duration: 0.2s;
 }
