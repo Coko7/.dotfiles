@@ -25,7 +25,7 @@
         // "custom/power"
     ],
     "custom/icon": {
-        "format": "",
+        "format": " ",
         "tooltip": true,
         "tooltip-format": "Power menu",
         "on-click": "$SCRIPTS/rofi/rofi-power-menu.sh"

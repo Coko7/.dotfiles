@@ -129,7 +129,7 @@ button:hover:not(.active) {
 
 #clock {
     font-family: "Hack Nerd Font";
-    color: @blue;
+    color: @white;
 }
 
 #idle_inhibitor {
