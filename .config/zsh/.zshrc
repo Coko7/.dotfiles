@@ -110,8 +110,8 @@ bindkey '^E' zoxide_prompt_interactive
 
 # Custom ZLE widget to launch yazi interactive with CTRL+N(avigate)
 function yazi_interactive() {
-    y
-    zle reset-prompt
+    BUFFER="y"          # Set command line buffer to "y"
+    zle .accept-line    # Call the original accept-line widget to execute
 }
 zle -N yazi_interactive
 bindkey '^N' yazi_interactive
