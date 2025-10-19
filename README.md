@@ -41,7 +41,9 @@ You can check a detailed list of my preferred apps here: [coko7/my-floss](https:
 
 ## ⌨️ Keyboard setup
 
-I am not using a classic ISO keyboard. More info here: [coko7/crkbd](https://github.com/Coko7/crkbd)
+I have been using ergonomic keyboards for some years now:
+- 46 keys Corne: [coko7/crkbd](https://github.com/Coko7/crkbd)
+- 60 keys Sofle: [coko7/sofle](https://github.com/coko7/sofle)
 
 ## ✨ Inspiration
 
