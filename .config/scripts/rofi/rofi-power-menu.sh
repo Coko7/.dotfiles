@@ -14,7 +14,7 @@ function confirm_prompt() {
 }
 
 # options="󰐥 Power off\n󰜉 Reboot\n󰒲 Suspend\n󰍃 Logout\n󰌾 Lock\n󰸉 Wallpaper"
-options=" Install\n󰐥 Power off\n󰜉 Reboot\n󰒲 Suspend\n󰌾 Lock\n Kanumi\n󰃬 Calculator\n󰛨 Backlight\n󰞋 Keybinds"
+options=" Install\n󰍹 Display\n󰐥 Power off\n󰜉 Reboot\n󰒲 Suspend\n󰌾 Lock\n Kanumi\n󰃬 Calculator\n󰛨 Backlight\n󰞋 Keybinds"
 # pick=$(echo -e $options | rofi -dmenu -p "󰒓 Action" -i -theme-str 'window {width: 15%; height: 30%;}')
 # pick=$(echo -e $options | rofi -dmenu -p "󰒓 Action" -i -theme-str 'window {width: 10%; height: 22%;}')
 pick=$(echo -e "$options" | rofi -dmenu -p "   Action " -i -theme-str 'window {width: 450px; height: 300px;}')
@@ -31,4 +31,5 @@ case $formatted_pick in
     "Backlight") bash "$SCRIPTS/rofi/rofi-man-backlight.sh" ;;
     "Keybinds") bash "$SCRIPTS/rofi/rofi-binds-help.sh" ;;
     "Install") bash "$SCRIPTS/rofi/rofi-pkg-install.sh" ;;
+    "Display") bash "$SCRIPTS/rofi/rofi-monzet.sh" ;;
 esac
