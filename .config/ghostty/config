@@ -8,3 +8,5 @@ background-opacity = 0.9
 
 # Disable ligatures (they were fun but I am tired of them now)
 font-feature = -calt,-liga,-dlig
+
+confirm-close-surface = false
