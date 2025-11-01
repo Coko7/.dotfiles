@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TERMINAL="ghostty --gtk-single-instance=true"
+TERMINAL="ghostty --gtk-single-instance=true --title=floater-ghostty"
 
 function choice_prompt() {
     local prompt="  Install "

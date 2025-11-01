@@ -5,6 +5,7 @@
 
 fzf_args=(
   --multi
+  --height=100%
   --preview 'paru -Siia {1}'
   --preview-label='alt-p: toggle description, alt-b/B: toggle PKGBUILD, alt-j/k: scroll, tab: multi-select'
   --preview-label-pos='bottom'

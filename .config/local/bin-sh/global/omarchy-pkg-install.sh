@@ -4,6 +4,7 @@
 
 fzf_args=(
   --multi
+  --height=100%
   --preview 'pacman -Sii {1}'
   --preview-label='alt-p: toggle description, alt-j/k: scroll, tab: multi-select'
   --preview-label-pos='bottom'
