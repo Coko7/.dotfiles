@@ -16,6 +16,7 @@ function find_main_monitor() {
 pick=$(find "$SETUPS_DIR" -type f -printf "%f\n" | fzf \
     --border-label ' Interactive Monitor Setup ' --input-label ' Input ' \
     --list-label ' Setups ' --preview-label ' File Preview ' \
+    --height=100% \
     --preview="bat $SETUPS_DIR/{} --language toml --color=always --style=plain")
 
 if [ -z "$pick" ]; then
