@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-ghostty --gtk-single-instance=true -e monzet.sh -e monzet.sh
+# TERMINAL="ghostty --gtk-single-instance=true --title=floater-ghostty"
+ghostty --gtk-single-instance=true --title=floater-ghostty -e monzet.sh
