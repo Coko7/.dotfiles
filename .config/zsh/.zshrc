@@ -100,36 +100,15 @@ eval "$(starship init zsh)"
 
 eval "$(zoxide init zsh)"
 
-# Custom ZLE widget to launch zoxide interactive with CTRL+E(xplore)
-function zoxide_prompt_interactive() {
-    zi
-    zle reset-prompt
-}
-zle -N zoxide_prompt_interactive
-bindkey '^E' zoxide_prompt_interactive
+# +------------+
+# | CUSTOM ZLE |
+# +------------+
 
-# Custom ZLE widget to launch yazi interactive with CTRL+N(avigate)
-function yazi_interactive() {
-    BUFFER="y"          # Set command line buffer to "y"
-    zle .accept-line    # Call the original accept-line widget to execute
-}
-zle -N yazi_interactive
-bindkey '^N' yazi_interactive
+source "$ZDOTDIR/my-custom-zle.zsh"
 
-# Custom ZLE widget to launch neovim interactive with CTRL+T(ext Edit)
-function neovim_interactive() {
-    nvim
-    zle reset-prompt
-}
-zle -N neovim_interactive
-bindkey '^T' neovim_interactive
-
-# Custom ZLE widget to copy current line to clipboard
-function copy_line_to_clipboard() {
-    print -r -- "$BUFFER" | wl-copy --trim-newline
-}
-zle -N copy_line_to_clipboard
-bindkey '^Y' copy_line_to_clipboard
+# +------+
+# | MISC |
+# +------+
 
 # zsh parameter completion for the dotnet CLI
 
