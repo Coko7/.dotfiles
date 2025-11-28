@@ -11,6 +11,8 @@ if ! [[ $level =~ $re ]] ; then
    echo "error: provide a number" >&2; exit 1
 fi
 
+echo "$level"
+
 gum spin --title="💡 Setting brightness to $level..." \
-    -- ddcutil setvcp 10 "$level" \
-    && brightnessctl set "${level}%"
+    -- brightnessctl set "${level}%" \
+    && ddcutil setvcp 10 "$level"
