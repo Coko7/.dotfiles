@@ -1,14 +1,16 @@
-[manager]
+[mgr]
 show_hidden = true
 
 [opener]
 edit = [
     { run = '$EDITOR "$@"', block = true, desc = "Open with $EDITOR" },
-    { run = 'bash viml.sh "$@"', block = true, desc = "Open with viml.sh" }
+    { run = 'bash viml.sh "$@"', block = true, desc = "Open with viml.sh" },
+    { run = 'nvim -u NONE "$@"', block = true, desc = "Open with default NeoVim" }
 ]
 image = [
     { run = 'vimiv "$@"', desc = "Open with vimiv" },
-    { run = 'gimp "$@"', desc = "Open with Gimp" }
+    { run = 'gimp "$@"', desc = "Open with Gimp" },
+    { run = 'wl-copy < "$@"', desc = "Copy to clipboard" }
 ]
 video = [
     { run = 'mpv "$@"', desc = "Open with mpv" },
@@ -17,6 +19,7 @@ video = [
 
 [open]
 prepend_rules = [
+    { name = "*.log", use = "edit" },
     { mime = "image/*", use = "image" },
     { mime = "video/*", use = "video" }
 ]

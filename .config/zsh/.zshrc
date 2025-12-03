@@ -67,6 +67,15 @@ source $ZDOTDIR/plugins/catppuccin_macchiato-zsh-syntax-highlighting.zsh
 source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
+# +------+
+# | NAVI |
+# +------+
+
+# Put before fzf-git.sh!
+eval "$(navi widget zsh)"
+bindkey -r '^G' # Unbind old Ctrl+G
+bindkey '^H' _navi_widget # Bind Navi to Ctrl+H
+
 # +-----+
 # | FZF |
 # +-----+

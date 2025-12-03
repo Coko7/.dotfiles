@@ -1,2 +1,0 @@
-os:
-  openLink: '$SCRIPTS/web-open.sh {{link}}'

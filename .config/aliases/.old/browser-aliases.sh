@@ -4,7 +4,7 @@ function wrfe() {
         return 1
     fi
     query=$(url.sh --encode "$@")
-    "$SCRIPTS/web-open.sh" "https://www.wordreference.com/fren/$query";
+    $BROWSER "https://www.wordreference.com/fren/$query";
 }
 
 function wref() {
@@ -13,5 +13,5 @@ function wref() {
         return 1
     fi
     query=$(url.sh --encode "$@")
-    "$SCRIPTS/web-open.sh" "https://www.wordreference.com/enfr/$query";
+    $BROWSER "https://www.wordreference.com/enfr/$query";
 }

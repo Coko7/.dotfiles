@@ -21,7 +21,7 @@ function browse_thor_work() {
         return 1
     fi
 
-    "$SCRIPTS/web-open.sh" "$pick"
+    $BROWSER "$pick"
 }
 
 function browse_thor_perso() {
@@ -33,7 +33,7 @@ function browse_thor_perso() {
         return 1
     fi
 
-    "$SCRIPTS/web-open.sh" "$pick"
+    $BROWSER "$pick"
 }
 
 function vim_thor_work() {

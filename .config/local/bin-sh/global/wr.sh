@@ -17,5 +17,5 @@ if [ -z "$2" ]; then
 fi
 
 query=$(url.sh --encode "$exp")
-"$SCRIPTS/web-open.sh" "https://www.wordreference.com/$wr_trans_key/$query"
+$BROWSER "https://www.wordreference.com/$wr_trans_key/$query"
 # w3m "https://www.wordreference.com/$wr_trans_key/$query"
