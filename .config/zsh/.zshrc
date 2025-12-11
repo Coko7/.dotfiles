@@ -65,7 +65,10 @@ autoload -U compinit; compinit
 # syntax highlighting (with catppuccin theme)
 source $ZDOTDIR/plugins/catppuccin_macchiato-zsh-syntax-highlighting.zsh
 source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
+ZVM_INIT_MODE=sourcing
+ZVM_CURSOR_STYLE_ENABLED=false
+source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # +------+
 # | NAVI |
@@ -80,7 +83,26 @@ bindkey '^H' _navi_widget # Bind Navi to Ctrl+H
 # | FZF |
 # +-----+
 
-source <(fzf --zsh)
+# Preview file content using bat (https://github.com/sharkdp/bat)
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="
+    --walker-skip .git,node_modules,target
+    --preview '$SCRIPTS/fzf-preview.sh {}'
+    --border-label ' Search files ' --input-label ' Input '
+    --header-label ' File Type '
+    --bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" Previewing [%s] \" {}'
+    --bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"' \
+    --bind 'focus:transform-header:file --brief {}'
+    --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+# export FZF_CTRL_R_OPTS="
+#     --bind 'ctrl-y:execute-silent(echo -n {2..} | wl-copy)+abort'
+#     --color header:italic
+#     --header 'Press CTRL-Y to copy command into clipboard'"
+export FZF_CTRL_R_OPTS=""
+
+FZF_CTRL_R_COMMAND= FZF_ALT_C_COMMAND= source <(fzf --zsh)
 
 # Custom keybind shortcuts for Git
 source $ZDOTDIR/plugins/fzf-git/fzf-git.sh
@@ -90,6 +112,12 @@ source $ZDOTDIR/plugins/fzf-git/fzf-git.sh
 # +-------+
 
 eval "$(atuin init zsh)"
+
+# +----------+
+# | The Fuck |
+# +----------+
+
+eval $(thefuck --alias)
 
 # +------+
 # | RUST |
