@@ -4,6 +4,8 @@
 [alias]
     grepblame = "! $XDG_CONFIG_HOME/git/git-grepblame.sh"
 
+    lazy = "! lazygit"
+
     blameSmart = blame -w -C -C -C
 
     los = "log --stat --color=always"
@@ -23,3 +25,5 @@
     status-nolock = "!f() { git -c color.ui=always status | grep --color=always -v packages.lock.json; }; f"
 
     filter-repo = "!python3 ~/.config/local/bin-sh/global/git-filter-repo"
+
+    zash = "!git-zash.sh"
