@@ -6,11 +6,11 @@ MON_SYM_LNK="$HYPR_DIR/monitors.conf"
 
 function find_main_monitor() {
     monitors=$(hyprctl monitors -j)
+    json_query='first(.[].name)'
     if [ "$(echo "$monitors" | jq 'length')" -gt 1 ]; then
-        echo "$monitors" | jq -r 'first(.[] | select(.name != "eDP-1") | .name)'
-    else
-        echo "$monitors" | jq -r 'first(.[].name)'
+        json_query='map(select(.name | startswith("eDP") | not)) | first(.[].name)'
     fi
+    echo "$monitors" | jq -r "$json_query"
 }
 
 pick=$(find "$SETUPS_DIR" -type f -printf "%f\n" | fzf \
@@ -31,8 +31,8 @@ if gum confirm "Are you sure you want to switch to $pick?" --default=true; then
         hyprctl reload
 
         # attempts to move all existing workspaces to the new main monitor:
-        # - we assume the main monitor is not "eDP-1" (embedded Display Port for laptops)
-        # - we also assume the first monitor that is not "eDP-1" is the main monitor
+        # - we assume the main monitor's name does not start with "eDP" (embedded Display Port for laptops)
+        # - we also assume the first monitor that does not start with "eDP" is the main monitor
         main_monitor=$(find_main_monitor)
         if [ -n "$main_monitor" ]; then
             for workspace_id in $(hyprctl workspaces -j | jq '.[].id')
