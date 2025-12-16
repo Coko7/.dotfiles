@@ -8,8 +8,8 @@ edit = [
     { run = 'nvim -u NONE "$@"', block = true, desc = "Open with default NeoVim" }
 ]
 image = [
-    { run = 'vimiv "$@"', desc = "Open with vimiv" },
-    { run = 'gimp "$@"', desc = "Open with Gimp" },
+    { run = 'imv "$@"', desc = "Open with imv" },
+    { run = 'gimp "$@"', desc = "Open in Gimp" },
     { run = 'wl-copy < "$@"', desc = "Copy to clipboard" }
 ]
 video = [
