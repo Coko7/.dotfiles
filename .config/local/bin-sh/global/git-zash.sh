@@ -1,0 +1,1 @@
+/home/coco/Workspace/personal/Programming/bash/git-zash/git-zash.sh
