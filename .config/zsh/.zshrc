@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
 fpath=($XDG_CONFIG_HOME/zsh/plugins $fpath)
 
 # +------------------------+
@@ -68,6 +71,7 @@ source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ZVM_INIT_MODE=sourcing
 ZVM_CURSOR_STYLE_ENABLED=false
+ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # +------+

@@ -45,7 +45,7 @@ bindkey '^ga' _my_ollama_commit_msg_generator
 
 function _my_commit_messages_fzf() {
     local msg
-    msg=$(git log --pretty=format:"%s" | fzf) || msg=""
+    msg=$(fzf-my-commit-messages.sh) || msg=""
     BUFFER="${BUFFER}${msg}"
     CURSOR=$#BUFFER
     zle reset-prompt
