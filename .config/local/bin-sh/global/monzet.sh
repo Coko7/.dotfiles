@@ -13,10 +13,10 @@ function find_main_monitor() {
     echo "$monitors" | jq -r "$json_query"
 }
 
-pick=$(find "$SETUPS_DIR" -type f -printf "%f\n" | fzf \
+pick=$(find "$SETUPS_DIR" -type f -printf "%f\n" | fzf-rofi.sh \
     --border-label ' Interactive Monitor Setup ' --input-label ' Input ' \
     --list-label ' Setups ' --preview-label ' File Preview ' \
-    --height=100% \
+    --preview-window 'right:70%' --height=100% \
     --preview="bat $SETUPS_DIR/{} --language toml --color=always --style=plain")
 
 if [ -z "$pick" ]; then

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-TERMINAL="ghostty --gtk-single-instance=true --title=floater-ghostty"
-
 function choice_prompt() {
     local prompt="  Install "
     local choice
@@ -13,7 +11,7 @@ function choice_prompt() {
 
 mode=$(choice_prompt)
 case "$mode" in
-    package)    $TERMINAL -e omarchy-pkg-install.sh ;;
-    aur)        $TERMINAL -e omarchy-pkg-aur-install.sh ;;
+    package)    floatty.sh omarchy-pkg-install.sh ;;
+    aur)        floatty.sh omarchy-pkg-aur-install.sh ;;
     *) exit 1;;
 esac

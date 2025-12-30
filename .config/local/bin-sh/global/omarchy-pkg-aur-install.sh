@@ -18,7 +18,7 @@ fzf_args=(
   --color 'pointer:green,marker:green'
 )
 
-pkg_names=$(paru -Slqa | fzf "${fzf_args[@]}")
+pkg_names=$(paru -Slqa | fzf-rofi.sh "${fzf_args[@]}")
 
 if [[ -n "$pkg_names" ]]; then
   # Convert newline-separated selections to space-separated for paru

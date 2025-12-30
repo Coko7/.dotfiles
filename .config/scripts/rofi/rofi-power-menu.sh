@@ -31,5 +31,5 @@ case $formatted_pick in
     "Backlight") bash "$SCRIPTS/rofi/rofi-man-backlight.sh" ;;
     "Keybinds") bash "$SCRIPTS/rofi/rofi-binds-help.sh" ;;
     "Install") bash "$SCRIPTS/rofi/rofi-pkg-install.sh" ;;
-    "Display") bash "$SCRIPTS/rofi/rofi-monzet.sh" ;;
+    "Display") floatty.sh monzet.sh ;;
 esac
