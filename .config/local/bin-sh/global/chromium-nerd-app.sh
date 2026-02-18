@@ -15,5 +15,5 @@ VIMIUM_EXT_PATH="$CHROMIUM_EXT_PATH/$VIMIUM_EXT_ID/$VIMIUM_VERSION"
 /usr/bin/chromium \
     --app="$APP_URL" \
     --disable-features=WaylandWpColorManagerV1 \
-    --user-data-dir="$XDG_CONFIG_HOME/chromium-work-outlook" \
+    --user-data-dir="$DATA_DIR" \
     --load-extension="$VIMIUM_EXT_PATH"
