@@ -27,7 +27,7 @@ notify-send -u low "Oh Captain, Read!" "Got some text🚀" \
 # Copy result to clipboard
 # cat "$TXT_PATH" | wl-copy
 
-nvim-qt "$TXT_PATH"
+floatty.sh "$EDITOR $TXT_PATH"
 sleep 0.5s
 
 rm -f "$IMG_PATH" "$TXT_PATH"
