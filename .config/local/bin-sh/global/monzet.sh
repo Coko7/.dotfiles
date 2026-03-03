@@ -28,15 +28,8 @@ if gum confirm "Are you sure you want to switch to $pick?" --default=true; then
     if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
         hyprctl reload
 
-        # attempts to move all existing workspaces to the new main monitor:
-        # - we assume the main monitor's name does not start with "eDP" (embedded Display Port for laptops)
-        # - we also assume the first monitor that does not start with "eDP" is the main monitor
-        main_monitor=$(find_main_monitor)
-        if [ -n "$main_monitor" ]; then
-            for workspace_id in $(hyprctl workspaces -j | jq '.[].id')
-            do
-                hyprctl dispatch moveworkspacetomonitor "$workspace_id" "$main_monitor"
-            done
+        if gum confirm "Fix Hypr-Space 🌌 ?"; then
+            fix-hypr-space.sh
         fi
     fi
 fi
