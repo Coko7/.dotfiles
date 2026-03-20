@@ -3,23 +3,27 @@ show_hidden = true
 
 [opener]
 edit = [
-    { run = '$EDITOR "$@"', block = true, desc = "Open with $EDITOR" },
-    { run = 'bash viml.sh "$@"', block = true, desc = "Open with viml.sh" },
-    { run = 'nvim -u NONE "$@"', block = true, desc = "Open with default NeoVim" }
+    { run = '$EDITOR %s', block = true, desc = "Open with default editor" },
+    { run = 'bash viml.sh %s', block = true, desc = "Open with viml.sh" },
+    { run = 'nvim -u NONE %s', block = true, desc = "Open with bare NeoVim" },
+    { run = 'wl-copy < %s && notify-send "copied content to clipboard"', desc = "Copy to clipboard" }
 ]
 image = [
-    { run = 'imv "$@"', desc = "Open with imv" },
-    { run = 'gimp "$@"', desc = "Open in Gimp" },
-    { run = 'wl-copy < "$@"', desc = "Copy to clipboard" }
+    { run = 'imv %s', desc = "Open with imv" },
+    { run = 'gimp %s', desc = "Open in Gimp" },
+    { run = 'wl-copy < %s && notify-send "copied content to clipboard"', desc = "Copy to clipboard" }
 ]
 video = [
-    { run = 'mpv "$@"', desc = "Open with mpv" },
-    { run = 'vlc "$@"', desc = "Open with VLC" } 
+    { run = 'mpv %s', desc = "Open with mpv" },
+    { run = 'vlc %s', desc = "Open with VLC" } 
 ]
 
 [open]
 prepend_rules = [
-    { name = "*.log", use = "edit" },
+    { url = "*.log", use = "edit" },
+    { url = "*.toml", use = "edit" },
+    { mime = "text/plain", use = "edit" },
+    { mime = "image/svg+xml", use = ["edit", "image"] },
     { mime = "image/*", use = "image" },
     { mime = "video/*", use = "video" }
 ]
