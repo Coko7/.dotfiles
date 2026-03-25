@@ -15,16 +15,16 @@ function pick_random() {
     monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
     for monitor in $monitor_names; do
         img=$(kanumi list | shuf | head -n 1)
-        swww img -o "$monitor" "$img" -t $SWWW_ANIM
+        awww img -o "$monitor" "$img" -t $SWWW_ANIM
     done
 }
 
 mode=$(choice_prompt)
 case "$mode" in
     random)     pick_random ;;
-    directory)  floatty.sh fzf-swww-kanumi-dir.sh ;;
-    image)      floatty.sh fzf-swww-kanumi-img.sh ;;
-    identify)   floatty.sh fzf-swww-kanumi-identify.sh ;;
+    directory)  floatty.sh fzf-awww-kanumi-dir.sh ;;
+    image)      floatty.sh fzf-awww-kanumi-img.sh ;;
+    identify)   floatty.sh fzf-awww-kanumi-identify.sh ;;
     configure)  floatty.sh "$EDITOR $XDG_CONFIG_HOME/kanumi/config.toml" ;;
     *) exit 1;;
 esac

@@ -21,7 +21,7 @@ function display_lang_docs() {
         mkdir -p $CACHE_DIR
     fi
 
-    local lang_cache_file="$CACHE_DIR/$lang_code"
+    local lang_cache_file="$CACHE_DIR/$lang_code.$bat_lang_code"
     if [ ! -f "$lang_cache_file" ]; then
         curl -s "$full_url" > "$lang_cache_file" || rm "$lang_cache_file"
         if [ ! -f "$lang_cache_file" ]; then
@@ -29,16 +29,19 @@ function display_lang_docs() {
         fi
     fi
 
-    if [ -n "$bat_lang_code" ]; then
-        bat -l "$bat_lang_code" -n "$lang_cache_file"
-    else
-        bat -n "$lang_cache_file"
-    fi
+    nvim "$lang_cache_file"
+
+    # if [ -n "$bat_lang_code" ]; then
+    #     bat -l "$bat_lang_code" -n "$lang_cache_file" --color=always
+    # else
+    #     bat -n "$lang_cache_file"
+    # fi
 }
 
 function find_lang() {
-    local input=$1
-    echo "$XNY_DATA" | jq --arg lang "$input" -r '.[] | select(.name == $lang) | .source_code_link'
+    jq --arg lang "$1" --raw-output '.[]
+        | select(.name == $lang)
+        | .source_code_link' <<< "$XNY_DATA"
 }
 
 # If arg is provided, try to find the language
@@ -55,7 +58,7 @@ if [ -n "$1" ]; then
 fi
 
 # If no arg provided, go into interactive mode
-xny_lang=$(echo "$XNY_DATA" | jq -r '.[].name' | fzf \
+xny_lang=$(jq --raw-output '.[].name' <<< "$XNY_DATA" | fzf \
     --border-label ' Learn X in Y minutes Fuzzer ' --input-label ' Input ' \
     --list-label ' Pages ' --preview="figlet {} | lolcat -f -S 42")
 if [ -n "$xny_lang" ]; then

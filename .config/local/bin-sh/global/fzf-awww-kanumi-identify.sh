@@ -3,7 +3,7 @@
 root_path=$(kanumi config show --json | jq -r '.root_path')
 metadata_path=$(kanumi config show --json | jq -r '.meta_path')
 
-pick=$(swww query \
+pick=$(awww query \
     | sed 's/^: //g' \
     | sed 's/currently displaying: //g' \
     | sed "s|$root_path||" \

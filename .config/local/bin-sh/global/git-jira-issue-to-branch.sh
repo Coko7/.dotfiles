@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 
 CACHE_DIR="$XDG_CONFIG_HOME/.jira/issues/"
+ISSUES_FILE="$CACHE_DIR/issues.json"
 
-issue_raw=$(jira-my-issues.sh)
-[[ -z "$issue_raw" ]] && exit 1
+issue_num=$(fzf-jira-issues.sh)
 
-issue=$(echo "$issue_raw" | cut -d $'\t' -f1)
-issue_cache="$CACHE_DIR/iss_$issue.tmp"
-issue_name=$(grep "#" < "$issue_cache" | cut -d'#' -f2 | awk '{$1=$1};1')
-issue_name_kebab=$(echo "$issue_name" \
-    | tr -d "'" \
-    | tr ' ' '-' \
-    | tr -d ':' \
-    | tr -d '(' \
-    | tr -d ')')
+[[ -z "$issue_num" ]] && exit 1
 
-echo "$(whoami)/$issue/$issue_name_kebab"
+issue_title=$(jq --raw-output --arg key "$issue_num" '.[] 
+    | select(.key == $key) 
+    | .fields.summary' < "$ISSUES_FILE")
+
+issue_name_kebab=$(echo "$issue_title" \
+    | tr '[:upper:]' '[:lower:]' \
+    | tr '+ ' '--' \
+    | tr --delete "':()")
+
+echo "$(whoami)/$issue_num/$issue_name_kebab"

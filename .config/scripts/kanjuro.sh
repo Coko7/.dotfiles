@@ -11,7 +11,7 @@ function main() {
 
     for monitor in $monitor_names; do
         img=$(kanumi list | shuf | head -n 1)
-        swww img -o "$monitor" "$img" -t outer
+        awww img -o "$monitor" "$img" -t outer
     done
 }
 

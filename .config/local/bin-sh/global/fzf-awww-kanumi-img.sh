@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SWWW_ANIM="random"
+AWWW_ANIM="random"
 
 pick=$(kanumi list \
     | fzf-rofi.sh --prompt='Image> ' --preview="fzf-preview.sh {}" \
@@ -9,5 +9,5 @@ pick=$(kanumi list \
 
 monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
 for monitor in $monitor_names; do
-    swww img -o "$monitor" "$pick" -t $SWWW_ANIM
+    awww img -o "$monitor" "$pick" -t $AWWW_ANIM
 done
