@@ -1,2 +1,8 @@
 os:
   openLink: $BROWSER {{link}}
+
+customCommands:
+  - key: 'G'
+    command: '$BROWSER $(gh browse --no-browser)'
+    context: 'global'
+    description: 'Show GitHub repo in browser'
