@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
 
-root_path=$(kanumi config show --json | jq -r '.root_path')
-metadata_path=$(kanumi config show --json | jq -r '.meta_path')
+metadata_path=$(kanumi config show --json | jq --raw-output '.meta_path')
 
-pick=$(awww query \
-    | sed 's/^: //g' \
-    | sed 's/currently displaying: //g' \
-    | sed "s|$root_path||" \
-    | fzf-rofi.sh --prompt='Search active> ' \
-    --preview-window 'down:75%:wrap' \
-    --preview="echo {} | cut -d: -f4 | awk '{print \$1}' | xargs -I{} fzf-preview.sh $root_path{}")
+pick=$(
+  awww query --json |
+    jq --raw-output '."".[] | "\(.name): \(.displaying.image)"' |
+    fzf-rofi.sh --prompt='Search active> ' \
+      --delimiter=' ' \
+      --accept-nth=2 \
+      --header='CTRL-O to view image / CTRL-Y to yank path to clipboard' \
+      --preview-window 'down:70%:wrap' \
+      --preview="fzf-preview.sh {2}" \
+      --bind 'ctrl-o:execute-silent:imv -f {2}' \
+      --bind 'ctrl-y:execute-silent:wl-copy {2} && ntfy-toast.sh "kanumi" "Copied wallpaper path to cliboard" "/home/coco/Pictures/System/art.png"'
+)
 [[ -z "$pick" ]] && exit 1
 
-formatted_pick=$(echo -e "$pick" | rev | cut -d: -f1 | rev \
-    | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-line_number=$(rg --no-heading --line-number "$formatted_pick" "$metadata_path" | cut -d: -f1)
+line_number=$(rg --no-heading --line-number "$pick" "$metadata_path" |
+  cut --delimiter=':' --fields=1)
+
 nvim "+$line_number" "$metadata_path"

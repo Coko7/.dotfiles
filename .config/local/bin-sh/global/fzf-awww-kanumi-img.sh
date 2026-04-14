@@ -2,12 +2,12 @@
 
 AWWW_ANIM="random"
 
-pick=$(kanumi list \
-    | fzf-rofi.sh --prompt='Image> ' --preview="fzf-preview.sh {}" \
+pick=$(kanumi list |
+  fzf-rofi.sh --prompt='Image> ' --preview="fzf-preview.sh {}" \
     --delimiter='/' --with-nth=6..)
 [[ -z "$pick" ]] && exit 1
 
-monitor_names=$(hyprctl monitors all -j | jq '.[].name' | tr -d '"')
+monitor_names=$(hyprctl monitors all -j | jq --raw-output '.[].name')
 for monitor in $monitor_names; do
-    awww img -o "$monitor" "$pick" -t $AWWW_ANIM
+  awww img --outputs "$monitor" "$pick" --transition-type $AWWW_ANIM
 done
