@@ -12,7 +12,10 @@ pick=$(
       --preview-window 'down:70%:wrap' \
       --preview="fzf-preview.sh {2}" \
       --bind 'ctrl-o:execute-silent:imv -f {2}' \
-      --bind 'ctrl-y:execute-silent:wl-copy {2} && ntfy-toast.sh "kanumi" "Copied wallpaper path to cliboard" "/home/coco/Pictures/System/art.png"'
+      --bind 'ctrl-y:execute-silent:wl-copy {2} && \
+  ntfy-toast.sh "kanumi-identify" \
+  "Copied wallpaper path to cliboard" \
+  "/home/coco/Pictures/System/art.png"'
 )
 [[ -z "$pick" ]] && exit 1
 
