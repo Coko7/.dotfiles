@@ -14,6 +14,6 @@ issue_title=$(jq --raw-output --arg key "$issue_num" '.[]
 issue_name_kebab=$(echo "$issue_title" \
     | tr '[:upper:]' '[:lower:]' \
     | tr '+ ' '--' \
-    | tr --delete "':()")
+    | tr --delete "':()/!")
 
 echo "$(whoami)/$issue_num/$issue_name_kebab"

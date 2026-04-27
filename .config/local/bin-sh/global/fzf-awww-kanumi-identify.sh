@@ -23,3 +23,4 @@ line_number=$(rg --no-heading --line-number "$pick" "$metadata_path" |
   cut --delimiter=':' --fields=1)
 
 nvim "+$line_number" "$metadata_path"
+# floating-neovide.sh "kanumi-identify" "$metadata_path" -- "+$line_number"
