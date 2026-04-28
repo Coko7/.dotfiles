@@ -3,6 +3,6 @@ os:
 
 customCommands:
   - key: 'G'
-    command: '$BROWSER $(gh browse --no-browser)'
+    command: 'gh browse'
     context: 'global'
     description: 'Show GitHub repo in browser'

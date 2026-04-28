@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# uncomment this to blame startup times
+# zmodload zsh/zprof
+
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 
@@ -72,6 +75,7 @@ source $ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZVM_INIT_MODE=sourcing
 ZVM_CURSOR_STYLE_ENABLED=false
 ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+ZVM_LAZY_KEYBINDINGS=true
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # +------+
@@ -79,9 +83,9 @@ source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 # +------+
 
 # Put before fzf-git.sh!
-eval "$(navi widget zsh)"
-bindkey -r '^G' # Unbind old Ctrl+G
-bindkey '^H' _navi_widget # Bind Navi to Ctrl+H
+# eval "$(navi widget zsh)"
+# bindkey -r '^G' # Unbind old Ctrl+G
+# bindkey '^H' _navi_widget # Bind Navi to Ctrl+H
 
 # +-----+
 # | FZF |
@@ -99,6 +103,8 @@ export FZF_CTRL_T_OPTS="
     --bind 'focus:transform-header:file --brief {}'
     --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
+export FZF_COMPLETION_PATH_OPTS="--preview 'fzf-super-preview.sh {}' --height 100% --style=minimal"
+
 # CTRL-Y to copy the command into clipboard using pbcopy
 # export FZF_CTRL_R_OPTS="
 #     --bind 'ctrl-y:execute-silent(echo -n {2..} | wl-copy)+abort'
@@ -109,6 +115,7 @@ export FZF_CTRL_R_OPTS=""
 FZF_CTRL_R_COMMAND= FZF_ALT_C_COMMAND= source <(fzf --zsh)
 
 # Custom keybind shortcuts for Git
+bindkey -r '^G' # Unbind old Ctrl+G
 source $ZDOTDIR/plugins/fzf-git/fzf-git.sh
 
 # +-------+
@@ -147,6 +154,18 @@ eval "$(zoxide init zsh)"
 
 source "$ZDOTDIR/my-custom-zle.zsh"
 
+# +--------+
+# | DIRENV |
+# +--------+
+
+eval "$(direnv hook zsh)"
+
+# +---------+
+# | AMOXIDE |
+# +---------+
+
+# eval "$(am init zsh)"
+
 # +------+
 # | MISC |
 # +------+
@@ -169,3 +188,25 @@ _dotnet_zsh_complete()
 }
 
 compdef _dotnet_zsh_complete dotnet
+
+# pnpm
+export PNPM_HOME="/home/coco/.config/local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# uncomment this to blame startup times
+# zprof                # at the very end of ~/.zshrc
+
+. "$HOME/.config/local/share/../bin/env"
+
+
+# +--------------------------------------+
+# |             KOTOFETCH                |
+# |                                      |
+# | Japanese quotes and Anki in terminal |
+# +--------------------------------------+
+
+kotofetch | lolcat

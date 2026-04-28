@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+# Lets kill opencode for some time
+# alias opencode="echo '❌ no ai for you pal'"
+
 # +--------------+
 # | X11 SPECIFIC |
 # +--------------+
 
 # alias xpropc='xprop | grep WM_CLASS'        # display xprop class
-alias xop='xdg-open'                        # open file with default app
+alias xop='xdg-open' # open file with default app
 #alias xop='wslview'                        # WSL only
 # alias monsel="$SCRIPTS/x-mon-select.sh"     # x-mon-select allows to pick a monitor setup before starting x-server
 # alias xdpi="xrdb -query | grep Xft.dpi | awk '{print \$2}'"
@@ -16,10 +19,11 @@ alias xop='xdg-open'                        # open file with default app
 
 # alias cbi='win32yank.exe -i'                  # WSL only: copy IN
 # alias cbi='xclip -selection clipboard'        # X11 only: copy IN
-alias cbi='wl-copy'                             # Wayland only: copy IN
+alias cbi='wl-copy' # Wayland only: copy IN
 
 # alias cbo='xclip -o -selection clipboard'     # X11 only: copy OUT
-alias cbo='wl-paste'                            # Wayland only: copy OUT
+alias cbo='wl-paste' # Wayland only: copy OUT
+alias kcat="$XDG_CONFIG_HOME/cargo/bin/mcat"
 
 # +-----------------+
 # | PACMAN COMMANDS |
@@ -28,9 +32,9 @@ alias cbo='wl-paste'                            # Wayland only: copy OUT
 # alias paci='sudo pacman -S'                 # install
 paci() { pkgstats search "$1" && sudo pacman -S "$1"; }
 #alias pachi='sudo pacman -Ql'              # Pacman Has Installed - what files where installed in a package
-alias pacs='sudo pacman -Ss'                # search
-alias pacu='sudo pacman -Syu'               # update
-alias pacr='sudo pacman -R'                 # remove package but not dependencies
+alias pacs='sudo pacman -Ss'  # search
+alias pacu='sudo pacman -Syu' # update
+alias pacr='sudo pacman -R'   # remove package but not dependencies
 #alias pacrr='sudo pacman -Rs'              # remove package with unused dependencies by other softwares
 #alias pacrc='sudo pacman -Sc'              # remove pacman's cache
 #alias pacro='pacman -Rns $(pacman -Qtdq)'
@@ -61,6 +65,7 @@ alias lls='ezaic -ralF -s modified'
 alias lld='ezaic -alF -d */'
 alias la='ezaic -A'
 alias lst='ezaic --tree --no-permissions --no-filesize --no-user --no-time'
+alias lstg='lst --git-ignore'
 alias tree='lst'
 
 # classic ls aliases (if not using eza)
@@ -79,12 +84,12 @@ alias tree='lst'
 # +-------------+
 
 function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
 
 # +------+
@@ -112,7 +117,7 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
 function mktoday() {
-    mkdir "$(date +"%Y-%m-%d")"
+  mkdir "$(date +"%Y-%m-%d")"
 }
 
 # bat help highlighting
@@ -121,14 +126,16 @@ help() { "$@" --help 2>&1 | bathelp; }
 
 # Common
 alias vim='nvim'
+alias lvim='NVIM_APPNAME=nvim-lazy-distro nvim'
 alias soz="source \$ZDOTDIR/.zshrc"
 alias lock='betterlockscreen -l dim'
 alias twitch-dl="\$SCRIPTS/twitch-dl/twitch-dl.2.1.3.pyz"
 alias battery="acpi -b | grep -P -o '[0-9]+(?=%)'"
+alias letmein="xdg-open 'http://captive.apple.com'"
 # alias kb='sudo setxkbmap -layout'       # Keyboard quick switch
 
 function fzfip() {
-    fzf --preview="$SCRIPTS/fzf-preview.sh {}" --height 100%
+  fzf --preview="$XDG_CONFIG_HOME/local/bin-sh/global/fzf-preview.sh {}" --height 100%
 }
 
 # Kizaru-warp
@@ -136,13 +143,13 @@ function fzfip() {
 # alias jj='kizaru-warp --awakened'
 
 function chill() {
-    num=$((1 + RANDOM % 6))
-    if [ "$num" = "1" ]; then DISPLAY="" cacafire; fi
-    if [ "$num" = "2" ]; then nyancat; fi
-    if [ "$num" = "3" ]; then cmatrix; fi
-    if [ "$num" = "4" ]; then "$SCRIPTS/pipes.sh"; fi
-    if [ "$num" = "5" ]; then "$SCRIPTS/rick-roll.sh"; fi
-    if [ "$num" = "6" ]; then cava; fi
+  num=$((1 + RANDOM % 6))
+  if [ "$num" = "1" ]; then DISPLAY="" cacafire; fi
+  if [ "$num" = "2" ]; then nyancat; fi
+  if [ "$num" = "3" ]; then cmatrix; fi
+  if [ "$num" = "4" ]; then "$SCRIPTS/pipes.sh"; fi
+  if [ "$num" = "5" ]; then "$SCRIPTS/rick-roll.sh"; fi
+  if [ "$num" = "6" ]; then cava; fi
 }
 
 function weather() {
