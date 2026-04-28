@@ -4,7 +4,7 @@ DIRECTORY="${1:-}"
 [[ -z "$DIRECTORY" ]] && echo "expected directory as \$1" && exit 1
 [[ ! -d "$DIRECTORY" ]] && echo "not a directory: $1" && exit 1
 
-images=$(kanumi list --directories "$DIRECTORY" | head --lines=5)
+images=$(kanumi list --parent-directories "$DIRECTORY" | head --lines=5)
 [[ -z "$images" ]] && exit 1
 
 echo "$images" | while IFS= read -r img; do

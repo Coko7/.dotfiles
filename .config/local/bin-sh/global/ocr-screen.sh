@@ -6,24 +6,24 @@ TESSE_TXT_PATH="/tmp/ocr_text_$$"
 TXT_PATH="/tmp/ocr_text_$$.txt"
 
 if ! grim -g "$(slurp)" "$IMG_PATH"; then
-    exit 0
+  exit 0
 fi
 
 # Preprocess image for better OCR
 # magick "$IMG_PATH" -resize 400% "$IMG_PATH"
 
 # tesseract --list-langs to find other langs
-if ! tesseract -l eng "$IMG_PATH" "$TESSE_TXT_PATH" &> /dev/null; then
-    echo "tesseract failed to process: $IMG_PATH"
-    exit 1
+if ! tesseract -l eng "$IMG_PATH" "$TESSE_TXT_PATH" &>/dev/null; then
+  echo "tesseract failed to process: $IMG_PATH"
+  exit 1
 fi
 
 notify-send -u low "Oh Captain, Read!" "Got some text 🚀" \
-    -i "$HOME/Pictures/System/ocr.jpg" -t 2000 \
-    -h "string:x-canonical-private-synchronous:ocr-notif" --transient
+  -i "$HOME/Pictures/System/ocr.jpg" -t 2000 \
+  -h "string:x-canonical-private-synchronous:ocr-notif" --transient
 
-wl-copy < "$TXT_PATH"
-floatty.sh "$EDITOR $TXT_PATH"
+wl-copy <"$TXT_PATH"
+floatty.sh "my-ocr" "$EDITOR $TXT_PATH"
 sleep 0.5s
 
 rm -f "$IMG_PATH" "$TXT_PATH"
