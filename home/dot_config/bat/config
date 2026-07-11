@@ -1,9 +1,0 @@
---theme="Catppuccin Mocha"
-
---map-syntax "*.proj:XML"
---map-syntax "*.csproj:XML"
---map-syntax "*.wixproj:XML"
---map-syntax "*.resx:XML"
---map-syntax "**/AppData/*.config:XML"
---map-syntax "**/Customize/*.config:XML"
---map-syntax "*.cshtml:HTML"
